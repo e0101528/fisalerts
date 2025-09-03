@@ -1,0 +1,27 @@
+{
+  "name": "Path service not available",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": "import \"strings\"\nfrom(bucket: \"telegraf\")\n    |> range(start: -5m)\n    |> filter(fn: (r) => r[\"_measurement\"] == \"AdminLog\")\n    |> filter(fn: (r) => r[\"_field\"] == \"notice\")\n    |> filter(fn: (r) => r[\"level\"] == \"ERROR\")\n    |> filter(\n        fn: (r) =>\n            strings.containsStr(v: r._value, substr: \"path service not available\") == true,\n    )\n    |> aggregateWindow(every: 5m, fn: count, createEmpty: false)\n\n",
+    "name": "pathsvcnotavail"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } is: ${ r._level }",
+  "every": "5m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "TagName",
+      "value": "TagValue"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 0,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

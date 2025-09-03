@@ -1,0 +1,33 @@
+{
+  "name": "Intact Bean Check",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": "from(bucket: \"telegraf\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"AdminLog\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"cibccaprodwls1.na1.prod.azure\")\r\n  |> filter(fn: (r) => r[\"level\"] == \"ERROR\")\r\n  |> filter(fn: (r) => r[\"server\"] == \"cibccaprodwls1\")\r\n  |> filter(fn: (r) => r[\"source\"] == \"com.fnis.wms.core.intact.IntactPollerEJBBean\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"notice\")\r\n  |> count()\r\n",
+    "name": "IntactBeanCheck"
+  },
+  "statusMessageTemplate": "Check: ${ r._check_name } is: ${ r._level }",
+  "every": "5m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "TagName",
+      "value": "TagValue"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 20,
+      "type": "greater"
+    },
+    {
+      "allValues": false,
+      "level": "WARN",
+      "value": 10,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

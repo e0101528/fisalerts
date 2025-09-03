@@ -1,0 +1,6 @@
+from(bucket: "telegraf")
+  |> range(start: -1h)
+  |> keys()
+  |> keep(columns: ["_value"])
+  |> group()
+  |> distinct()

@@ -1,0 +1,8 @@
+The build script will take a (JSON) template from the ./check directory (having the .check extension)i and replace the ##QUERY placeholder with escaped flux. The flux query is taken from a file with the same name as the check from the ./flux directory (with the ".check" extension replaced buy the ".flux" extension). They are merged into a file with the ".json" extension into ./json. 
+Those can then be used to create checks using the create_check.bash script.
+The list_checks.bash and show_check.bash scripts can be used to inspect existing checks. 
+The delete_check.bash script can be used to delete existing checks. 
+
+NB
+Any query with options doesn't get created properly through the API. 
+The "data=from...." is omitted breaking the data input to the check task. 

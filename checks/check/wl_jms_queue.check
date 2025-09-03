@@ -1,0 +1,27 @@
+{
+  "name": "JMS Queue Length",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": ##QUERY##,
+    "name": "jmsqueuelength"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } is: ${ r._level }. Queue: ${ r.wls_Name } on ${ r.host }.",
+  "every": "2m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "service",
+      "value": "Weblogic"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 2000,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

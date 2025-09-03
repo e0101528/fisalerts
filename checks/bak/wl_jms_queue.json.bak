@@ -1,0 +1,27 @@
+{
+  "name": "JMS Queue Length",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": "import \"strings\"\n\nfrom(bucket: \"telegraf\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r[\"host\"] == \"cibccaprodwls1.na1.prod.azure\" or r[\"host\"] == \"cibccaprodwls2.na1.prod.azure\" or r[\"host\"] == \"cibccaprodwls3.na1.prod.azure\" or r[\"host\"] == \"cibccaprodwls4.na1.prod.azure\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weblogic.JMSRuntime\")\n  |> filter(fn: (r) => r[\"_field\"] == \"MessagesCurrentCount\" )\n  |> filter(fn: (r) => strings.containsStr(v: r.wls_Name, substr: \"DeadQueue\") == false )\n  |> filter(fn: (r) => strings.containsStr(v: r.wls_Name, substr: \"FisFundsBoslOrderQueue\") == false )\n  |> filter(fn: (r) => strings.containsStr(v: r.wls_Name, substr: \"FisFundsBoslRealtimeOrderQueue\") == false )\n  |> aggregateWindow(every: 6m, fn: max, createEmpty: false)\n  |>  filter(fn: (r) => r[\"_value\"] > 0)\n",
+    "name": "jmsqueuelength"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } is: ${ r._level }. Queue: ${ r.wls_Name } on ${ r.host }.",
+  "every": "2m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "service",
+      "value": "Weblogic"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 2000,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

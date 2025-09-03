@@ -1,0 +1,14 @@
+#!/bin/bash
+if [ "_$1" == "_" ] ; then 
+  echo supply script name
+else
+  if [ -e "$1" ] ; then 
+    fsx=$1 
+  elif [ -e "./flux/$1" ] ; then 
+    fsx="./flux/$1"
+  else
+    echo no such file
+    exit 1
+  fi
+  echo "$2" |  cat "$fsx" -  | influx query
+fi

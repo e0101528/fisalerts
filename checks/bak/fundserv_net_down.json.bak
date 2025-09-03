@@ -1,0 +1,27 @@
+{
+  "name": "Fundserv Network Reponse Failure",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": "import \"date\"\nimport \"timezone\"\noption location = timezone.location(name: \"America/Toronto\")\n\nfrom(bucket: \"telegraf\")\n  |> range(start: -5m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"net_response\")\n  |> filter(fn: (r) => r[\"server\"] == \"142.148.10.116\")\n  |> filter(fn: (r) => r[\"port\"] == \"1501\")\n  |> filter(fn: (r) => r[\"result\"] == \"connection_failed\")\n  |> filter(fn: (r) => r[\"_field\"] == \"result_code\")\n  |> filter(fn: (r) => date.hour(t: r._time) > 21 or  date.hour(t: r._time) < 20)\n  |> aggregateWindow(every: 5m, fn: count, createEmpty: false)\n\n",
+    "name": "fundservdown"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } is: ${ r._level }. Server: ${ r.server } Port: ${ r.port } --  ${ r.result_code }",
+  "every": "5m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "service",
+      "value": "MQM"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 1,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

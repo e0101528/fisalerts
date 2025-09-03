@@ -1,0 +1,27 @@
+{
+  "name": "Weblogic Socket Open Count",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": "from(bucket: \"telegraf\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r[\"host\"] == \"cibccaprodwls1.na1.prod.azure\" or r[\"host\"] == \"cibccaprodwls2.na1.prod.azure\" or r[\"host\"] == \"cibccaprodwls3.na1.prod.azure\" or r[\"host\"] == \"cibccaprodwls4.na1.prod.azure\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weblogic.ServerRuntime\")\n  |> filter(fn: (r) => r[\"_field\"] == \"OpenSocketsCurrentCount\" )\n  |> aggregateWindow(every: 5m, fn: mean, createEmpty: false)\n  \n",
+    "name": "wlsockopen"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } is: ${ r._level }",
+  "every": "2m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "service",
+      "value": "Weblogic"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 850,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

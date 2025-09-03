@@ -1,0 +1,161 @@
+package main
+
+import (
+	"encoding/json"
+	"flag"
+	"fmt"
+	"io"
+	"log"
+	"log/slog"
+	"net/http"
+	"os"
+	"text/template"
+
+	_ "github.com/davecgh/go-spew/spew"
+	"launchpad.net/goyaml"
+)
+
+type FieldMap struct {
+	Mappings map[string]string `yaml:"mappings"`
+	Fields   map[string]string `yaml:"fields"`
+}
+
+type CommandLineOptions struct {
+	ConfigFile string `json:"config_file"`
+	LogLevel   string `json:"log_level"`
+	Host       string `json:"host"`
+	Port       int    `json:" port"`
+	Live       bool   `json:"live"`
+}
+
+func getMap(fn string) FieldMap {
+	file, e := os.ReadFile(fn)
+	if e != nil {
+		slog.Error(fmt.Sprintf("Config file error: %v\n", e))
+		os.Exit(1)
+	}
+
+	// parse config file
+	fm := FieldMap{}
+	e = goyaml.Unmarshal(file, &fm)
+	if e != nil {
+		slog.Error(fmt.Sprintf("Config file error: %v\n", e))
+		os.Exit(1)
+	}
+	return fm
+}
+
+func getCLO() CommandLineOptions {
+	commandLineOptions := CommandLineOptions{}
+	flags := flag.NewFlagSet("fs", flag.ExitOnError)
+
+	flags.StringVar(&commandLineOptions.ConfigFile, "config-file", "./config.yml", "path to config ")
+	flags.StringVar(&commandLineOptions.LogLevel, "log-level", "info", "log level - 'debug', 'info', 'warn' or 'error'")
+	flags.StringVar(&commandLineOptions.Host, "host", "0.0.0.0", "webserver host")
+	flags.IntVar(&commandLineOptions.Port, "port", 80, "webserver port")
+	flags.BoolVar(&commandLineOptions.Live, "live", false, "Send live alerts")
+	flags.Parse(os.Args[1:])
+	log.Println(commandLineOptions.Port)
+	return commandLineOptions
+}
+
+func walk(f *FieldMap, j interface{}) map[string]string {
+	slog.Debug(fmt.Sprintf("Walking: %v\n", j))
+	r := make(map[string]string)
+
+	switch j := j.(type) {
+	case []string:
+		slog.Debug("[string]\n")
+
+		for i := range j {
+			w := walk(f, i)
+			for k, v := range w {
+				r[k] = v
+			}
+		}
+	case map[string]string:
+		slog.Debug("map[string]string\n")
+
+		for s, v := range j {
+			slog.Debug(fmt.Sprintf("STRING: %s = %s\n", s, v))
+			r[s] = v
+		}
+	case map[string]interface{}:
+		slog.Debug("map[string]interface\n")
+
+		for s, v := range j {
+			switch v := v.(type) {
+			case string:
+				slog.Debug(fmt.Sprintf("STRING: %s = %s\n", s, v))
+				r[s] = v
+
+			default:
+				w := walk(f, v)
+				for k, v := range w {
+					r[k] = v
+				}
+			}
+		}
+
+	case string:
+		slog.Debug(fmt.Sprintf("STRING: %s\n", j))
+		r["unnamed"] = j
+	}
+	return r
+}
+
+func handleAlert(f FieldMap) func(w http.ResponseWriter, r *http.Request) {
+	fm := f
+
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		if r.Method != "POST" {
+			slog.Error(fmt.Sprintf("Got non POST rq: %s", r.URL.String()))
+			http.Error(w, "Must POST alert", http.StatusBadRequest)
+			return
+		}
+		slog.Debug(fmt.Sprintf("Got a request: %s", r.URL.String()))
+
+		bodyContent, err := io.ReadAll(r.Body)
+		if err != nil {
+			http.Error(w, "Request body invalid", http.StatusBadRequest)
+
+			return
+		}
+		slog.Debug(fmt.Sprintf("Got POST rq: %s\n with body:\n%s\n----------------\n\n", r.URL.String(), string(bodyContent)))
+
+		var j interface{}
+		json.Unmarshal(bodyContent, &j)
+		content := walk(&fm, j)
+		var payload []byte
+		t := template.New("alert")
+		filename := "./gf.tmpl"
+		if t, ok := content["_destination"]; ok && t == "azure" {
+			filename = "az.tmpl"
+		}
+		t, err = t.ParseFiles(filename)
+		if err != nil {
+			panic(err)
+		}
+		err = t.Execute(w, content)
+		if err != nil {
+			http.Error(w, "Mapping failed", http.StatusBadRequest)
+		}
+		w.Write(payload)
+	}
+}
+
+func main() {
+	o := getCLO()
+	if o.LogLevel == "debug" {
+		slog.SetLogLoggerLevel(slog.LevelDebug)
+	}
+	m := getMap(o.ConfigFile)
+	slog.Debug(fmt.Sprintf("Got map: %v\n", m))
+	http.HandleFunc("/alert", handleAlert(m))
+	e := http.ListenAndServe(fmt.Sprintf("%s:%d", o.Host, o.Port), nil)
+	if e != nil {
+		panic(e)
+	}
+
+}

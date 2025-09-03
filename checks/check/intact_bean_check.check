@@ -1,0 +1,33 @@
+{
+  "name": "Intact Bean Check",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": ##QUERY##,
+    "name": "IntactBeanCheck"
+  },
+  "statusMessageTemplate": "Check: ${ r._check_name } is: ${ r._level }",
+  "every": "5m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "TagName",
+      "value": "TagValue"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 20,
+      "type": "greater"
+    },
+    {
+      "allValues": false,
+      "level": "WARN",
+      "value": 10,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

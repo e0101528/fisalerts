@@ -1,0 +1,27 @@
+{
+  "name": "HA Proxy Downtime",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": ##QUERY##,
+    "name": "haprxydtime"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } is: ${ r._level }",
+  "every": "2m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "service",
+      "value": "HAProxy"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 0.1,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

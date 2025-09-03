@@ -1,0 +1,27 @@
+{
+  "name": "HA Proxy Downtime",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": "import \"date\"\nimport \"timezone\"\noption location = timezone.location(name: \"America/Toronto\")\nfrom(bucket: \"telegraf\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"haproxy\")\n  |> filter(fn: (r) => r[\"_field\"] == \"downtime_rate\")\n  |> filter(fn: (r) => r[\"proxy\"] !~ /beuscm/)\n  |> filter(fn: (r) => date.hour(t: r._time) > 21 or  date.hour(t: r._time) < 20)\n  |> aggregateWindow(every: 2m, fn: max)\n  |> filter(fn: (r) => r._value > 0 )\n",
+    "name": "haprxydtime"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } is: ${ r._level }",
+  "every": "2m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "service",
+      "value": "HAProxy"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 0.1,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

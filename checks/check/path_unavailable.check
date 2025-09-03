@@ -1,0 +1,27 @@
+{
+  "name": "Path service not available",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": ##QUERY##,
+    "name": "pathsvcnotavail"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } is: ${ r._level }",
+  "every": "5m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "TagName",
+      "value": "TagValue"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 0,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

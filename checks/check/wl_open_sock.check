@@ -1,0 +1,27 @@
+{
+  "name": "Weblogic Socket Open Count",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": ##QUERY##,
+    "name": "wlsockopen"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } is: ${ r._level }",
+  "every": "2m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "service",
+      "value": "Weblogic"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 850,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

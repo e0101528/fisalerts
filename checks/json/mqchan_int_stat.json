@@ -1,0 +1,27 @@
+{
+  "name": "MQ Channel Outage Intact",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": "from(bucket: \"telegraf\")\n  |> range(start: -5m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"channel\")\n  |> filter(fn: (r) => r[\"channel\"] == \"TCP.WG70P1.INTACT.01\")\n  |> filter(fn: (r) => r[\"_field\"] == \"status\")\n  |> filter(fn:(r) => r[\"_value\"] != 3)\n  |> aggregateWindow(every: 15m, fn: count)\n",
+    "name": "mqchanintnotrun"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } for Intact is: ${ r._level }",
+  "every": "5m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "Channel",
+      "value": "Intact"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 0.01,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

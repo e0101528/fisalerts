@@ -1,0 +1,27 @@
+{
+  "name": "Broadridge Network Response Failure",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": ##QUERY##,
+    "name": "bfsdown"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } is: ${ r._level }. Server: ${ r.server } Port: ${ r.port } --  ${ r.result_code }",
+  "every": "5m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "service",
+      "value": "MQM"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 1,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

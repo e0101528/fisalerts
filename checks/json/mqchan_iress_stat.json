@@ -1,0 +1,27 @@
+{
+  "name": "MQ Channel Outage IRESS",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": "from(bucket: \"telegraf\")\n  |> range(start: -5m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"channel\")\n  |> filter(fn: (r) => r[\"channel\"] == \"FIS_IRESS.CH01\")\n  |> filter(fn: (r) => r[\"_field\"] == \"status\")\n  |> filter(fn:(r) => r[\"_value\"] != 3)\n  |> aggregateWindow(every: 15m, fn: count)\n",
+    "name": "mqchaniressnotrun"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } for IRESS is: ${ r._level }",
+  "every": "5m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "Channel",
+      "value": "IRESS"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 0.01,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

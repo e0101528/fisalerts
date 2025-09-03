@@ -1,0 +1,27 @@
+{
+  "name": "BPSA MQ Queue Depth Threshold",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": ##QUERY##,
+    "name": "bpsamqdepth"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } is: ${ r._level }",
+  "every": "2m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "service",
+      "value": "BPSA"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": true,
+      "level": "CRIT",
+      "value": 10000,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

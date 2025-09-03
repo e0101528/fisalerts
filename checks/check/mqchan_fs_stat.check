@@ -1,0 +1,27 @@
+{
+  "name": "MQ Channel Outage Fundserv",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": ##QUERY##,
+    "name": "mqchanfsnotrun"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } for FUNDSERV is: ${ r._level }",
+  "every": "5m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "Channel",
+      "value": "FUNDSERV"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 0.01,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}

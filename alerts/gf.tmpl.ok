@@ -1,0 +1,37 @@
+{
+"status": "{{ .status }}",
+"externalURL": "https://{{ .ipaddr }}/orgs/{{ .org }}/alerting/checks/{{  ._check_id }}/edit",
+  "alerts": [
+    {
+      "generatorURL": "https://{{ .self }}.na1.prod.azure:8086",
+      "status": "{{ .status }}",
+      "fingerprint": "{{ .uuid }}",
+      "alertRule": "LogTrap",
+      "severity": "{{ .severity }}",
+      "signalType": "{{ ._type }}",
+      "monitorCondition": "Fired",
+      "monitoringService": "Influxdb",
+      "alertTargetIDs": [
+        "/subscriptions/{{ .subscription }}/resourceGroups/{{ .resourceGroup }}/providers/Microsoft.Compute/virtualMachines/{{.host }}"
+      ],
+      "annotations": {
+        "description": "A {{ ._type }} alert for {{ .host }} due to check [{{ ._check_name }}] on [{{ ._source_measurement }}] occurred between {{ ._start }} and {{ ._stop }}.",         
+        "summary": "A {{ ._level }} level alert for {{ .host }} was fired at {{ ._time }}"
+      },
+      "labels": {
+        "alertname": "{{ ._check_name }}"
+      },
+      "configurationItems": [
+        "{{ .host }}"
+      ],
+      "originAlertId": "{{ ._check_id }}",
+      "firedDateTime": "{{ ._time }}",
+          "summary": "{{ ._level }} level alert for {{ .host }}"
+        }
+        ],
+"appGroupEmail": "{{ .appGroupEmail }}",
+"environment": "{{ .environment }}",
+"assignmentGroup": "{{ .assignmentGroup }}",
+"origin": "{{ .host }}"
+}
+

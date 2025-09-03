@@ -1,0 +1,27 @@
+{
+  "name": "JVM Heap Usage",
+  "orgID": "fb67cbd5fa6747e0",
+  "query": {
+    "text": "import \"experimental\"\n\nfrom(bucket: \"telegraf\")\n  |> range(start: -3m)\n  |> filter(fn: (r) => r[\"host\"] == \"cibccaprodwls1.na1.prod.azure\" or r[\"host\"] == \"cibccaprodwls2.na1.prod.azure\" or r[\"host\"] == \"cibccaprodwls3.na1.prod.azure\" or r[\"host\"] == \"cibccaprodwls4.na1.prod.azure\")\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weblogic.jvm_memory\" )\n  |> pivot(rowKey:[\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> map (\n  fn: (r) => ({\n r with \n  HeapUse:  r[\"HeapMemoryUsage.used\"] / r[\"HeapMemoryUsage.committed\"],\n })\n )\n|> drop(columns: [ \"HeapMemoryUsage.used\", \"HeapMemoryUsage.committed\"])\n|> experimental.unpivot()\n  |> filter(fn: (r) => r[\"_field\"] == \"HeapUse\" )\n|> aggregateWindow(every: 9m, fn: mean, createEmpty: true)\n|> fill(value: 0.0)\n",
+    "name": "jvmheapuse"
+    },
+  "statusMessageTemplate": "Check: ${ r._check_name } is: ${ r._level }",
+  "every": "3m",
+  "offset": "0s",
+  "tags": [
+    {
+      "key": "service",
+      "value": "Weblogic"
+    }
+  ],
+  "thresholds": [
+    {
+      "allValues": false,
+      "level": "CRIT",
+      "value": 0.95,
+      "type": "greater"
+    }
+  ],
+  "type": "threshold",
+  "status": "active"
+}
