@@ -1,0 +1,13 @@
+  - name: Volume Uage
+    detail: checks for per mountpoint volume percent used threshold 
+    fluxfile: flux/volume_usage.flux
+    severity: 1
+    threshold: 90
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+      - path
+    interval: 900
+    target: postfix
