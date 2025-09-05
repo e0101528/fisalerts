@@ -2,6 +2,7 @@ package notifier
 
 import (
 	"log"
+	"monitor/internal/utils"
 
 	"text/template"
 
@@ -15,15 +16,15 @@ type Logger struct {
 	DstEmail     string
 }
 
-func (x *Logger) SendAlert(content map[string]string) {
+func (x *Logger) SendAlert(content Content) {
 	t, err := x.GetTemplate()
 	if err != nil {
-		log.Println("Template Build failed")
+		utils.Error("Template Build failed %v", err)
 		return
 	}
 	buf, err := render(content, *t)
 	if err != nil {
-		log.Println("Template render")
+		utils.Error("Template render failed %v", err)
 		return
 	}
 

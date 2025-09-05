@@ -1,37 +1,39 @@
 {
-"status": "{{ .status }}",
-"externalURL": "https://{{ .ipaddr }}/orgs/{{ .org }}/alerting/checks/{{  ._check_id }}/edit",
+"status": "{{ .Fields.status }}",
+"externalURL": "https://{{ .Fields.ipaddr }}/orgs/{{ .Fields.org }}/alerting/checks/{{ .Fields._check_id }}/edit",
   "alerts": [
     {
-      "generatorURL": "https://{{ .self }}.na1.prod.azure:8086",
-      "status": "{{ .status }}",
-      "fingerprint": "{{ .uuid }}",
+      "generatorURL": "https://{{ .Fields.self }}.na1.prod.azure:8086",
+      "status": "{{ .Fields.status }}",
+      "fingerprint": "{{ .Fields.uuid }}",
       "alertRule": "LogTrap",
-      "severity": "{{ .severity }}",
-      "signalType": "{{ ._type }}",
+      "severity": "{{ .Fields.severity }}",
+      "signalType": "{{ .Fields._type }}",
       "monitorCondition": "Fired",
       "monitoringService": "Influxdb",
       "alertTargetIDs": [
-        "/subscriptions/{{ .subscription }}/resourceGroups/{{ .resourceGroup }}/providers/Microsoft.Compute/virtualMachines/{{.host }}"
+        "/subscriptions/{{ .Fields.subscription }}/resourceGroups/{{ .Fields.resourceGroup }}/providers/Microsoft.Compute/virtualMachines/{{ .Fields.host }}"
       ],
       "annotations": {
-        "description": "A {{ ._type }} {{ .severity }} alert for {{ .host }} due to check [{{ ._check_name }}] on [{{ ._measurement }}] occurred between {{ ._start }} and {{ ._stop }}. {{ ._message }}.",         
-        "summary": "A {{ ._check_name }} [{{ ._level }}] alert for {{ .host }} fired at {{ ._time }}"
+        "description": "A {{ .Fields._type }} {{ .Fields.severity }} alert for {{ .Fields.host }} due to check [{{ .Fields._check_name }}] on [{{ .Fields._measurement }}] occurred between {{ .Fields._start }} and {{ .Fields._stop }}. {{ .Fields._message }}.",         
+        "summary": "A {{ .Fields._check_name }} [{{ .Fields._level }}] alert for {{ .Fields.host }} fired at {{ .Fields._time }}"
       },
       "labels": {
-        "alertname": "{{ ._check_name }}"
+{{ range $k,$v := .Labels }}
+        "{{ $k }}": "{{ $v }}",{{ end }}
+        "alertname": "{{ .Fields._check_name }}"
       },
       "configurationItems": [
-        "{{ .host }}"
+        "{{ .Fields.host }}"
       ],
-      "originAlertId": "{{ ._check_id }}",
-      "firedDateTime": "{{ ._time }}",
-          "summary": "{{ ._level }} level alert for {{ .host }}"
+      "originAlertId": "{{ .Fields._check_id }}",
+      "firedDateTime": "{{ .Fields._time }}",
+          "summary": "{{ .Fields._level }} level alert for {{ .Fields.host }}"
         }
         ],
-"appGroupEmail": "{{ .appGroupEmail }}",
-"environment": "{{ .environment }}",
-"assignmentGroup": "{{ .assignmentGroup }}",
-"origin": "{{ .host }}"
+"appGroupEmail": "{{ .Fields.appGroupEmail }}",
+"environment": "{{ .Fields.environment }}",
+"assignmentGroup": "{{ .Fields.assignmentGroup }}",
+"origin": "{{ .Fields.host }}"
 }
 

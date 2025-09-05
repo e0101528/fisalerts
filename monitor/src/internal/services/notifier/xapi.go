@@ -20,7 +20,7 @@ type XAPI struct {
 	TargetURL    string
 }
 
-func (x *XAPI) SendAlert(content map[string]string) {
+func (x *XAPI) SendAlert(content Content) {
 	t, err := x.GetTemplate()
 	if err != nil {
 		utils.Error("Template Build failed")
@@ -38,7 +38,7 @@ func (x *XAPI) SendAlert(content map[string]string) {
 		fmt.Printf("%s = %s\n", k, v[0])
 		parameters.Add(k, v[0])
 	}
-	parameters.Add("recipients", content["recipients"])
+	parameters.Add("recipients", content.Fields["recipients"])
 	target.RawQuery = parameters.Encode()
 	if err != nil {
 		utils.Error("URL Build failed")

@@ -16,7 +16,7 @@ type Postfix struct {
 	DstEmail     string
 }
 
-func (x *Postfix) SendAlert(content map[string]string) {
+func (x *Postfix) SendAlert(content Content) {
 	t, err := x.GetTemplate()
 	if err != nil {
 		utils.Error("Template Build failed")

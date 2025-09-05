@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"monitor/internal/config"
 	infl "monitor/internal/repositories/influxdb"
+	"monitor/internal/services/notifier"
 	"monitor/internal/utils"
 	"time"
 
@@ -73,32 +74,34 @@ func Run(ctx context.Context, c config.Check) {
 	}
 	//utils.Dumper(res)
 }
-func RtoC(cfg *config.ApplicationConfig, r map[string]interface{}, c config.Check) (content map[string]string) {
+func RtoC(cfg *config.ApplicationConfig, r map[string]interface{}, c config.Check) (content notifier.Content) {
 
-	content = make(map[string]string)
+	content.Labels = make(map[string]string)
+	content.Fields = make(map[string]string)
 	for n, v := range r {
-		content[n] = fmt.Sprintf("%v", v)
-
+		if isin(n, &c.Tags) {
+			content.Labels[n] = fmt.Sprintf("%v", v)
+		}
 	}
 
-	content["self"] = cfg.Webserver.Host
-	content["status"] = "firing"
-	content["severity"] = fmt.Sprintf("SEV-%d", c.Severity)
-	content["_level"] = levels[c.Severity]
+	content.Fields["self"] = cfg.Webserver.Host
+	content.Fields["status"] = "firing"
+	content.Fields["severity"] = fmt.Sprintf("SEV-%d", c.Severity)
+	content.Fields["_level"] = levels[c.Severity]
 
-	//	content["self"] = o.Self
-	content["uuid"] = uuid.NewString()
-	content["resourceGroup"] = cfg.AzureRG
-	content["subscription"] = cfg.AzureSub
-	content["environment"] = "Test"
-	content["appGroupEmail"] = cfg.AppGroupEmail
-	content["assignmentGroup"] = cfg.AssignmentGroup
-	content["ipaddr"] = cfg.IPAddr
-	content["recipients"] = cfg.AssignmentGroup
-	content["org"] = cfg.Organization
-	content["_type"] = "Threshold"
-	content["_check_name"] = c.Name
-	content["_check_id"] = c.ID
+	//	content.Fields["self"] = o.Self
+	content.Fields["uuid"] = uuid.NewString()
+	content.Fields["resourceGroup"] = cfg.AzureRG
+	content.Fields["subscription"] = cfg.AzureSub
+	content.Fields["environment"] = "Test"
+	content.Fields["appGroupEmail"] = cfg.AppGroupEmail
+	content.Fields["assignmentGroup"] = cfg.AssignmentGroup
+	content.Fields["ipaddr"] = cfg.IPAddr
+	content.Fields["recipients"] = cfg.AssignmentGroup
+	content.Fields["org"] = cfg.Organization
+	content.Fields["_type"] = "Threshold"
+	content.Fields["_check_name"] = c.Name
+	content.Fields["_check_id"] = c.ID
 
 	//utils.Dumper(content)
 	return content
@@ -187,6 +190,15 @@ func compare(value interface{}, comparator string, match interface{}) bool {
 				utils.Debug("unknown string comparison %s\n", comparator)
 				return false
 			}
+		}
+	}
+	return false
+}
+
+func isin(s string, a *[]string) bool {
+	for i := range *a {
+		if (*a)[i] == s {
+			return true
 		}
 	}
 	return false

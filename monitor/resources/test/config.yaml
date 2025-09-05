@@ -47,8 +47,8 @@ calendars:
 checks:
   - name: IOWait Max
     detail: checks for maximum IOWait exceeding a threshold
-    calendar: OfficeHours
-    fluxfile: /home/triggs/fisaz/monitor/resources/test/usage_iowait.flux
+ #   calendar: OfficeHours
+    fluxfile: usage_iowait.flux
     severity: 1
     threshold: 0.003
     comparison: gt
@@ -60,7 +60,7 @@ checks:
     target: logonly
   - name: Idle Min
     detail: checks for minimum CPU Idle below a threshold
-    fluxfile: /home/triggs/fisaz/monitor/resources/test/usage_idle.flux
+    fluxfile: usage_idle.flux
     severity: 1
     threshold: 90
     comparison: le
@@ -69,11 +69,11 @@ checks:
       - _field
       - _measurement
     interval: 20
-    target: postfix
+    target: logonly
   - name: System Uptime
     detail: checks for minimum CPU Idle below a threshold
-    calendar: Lazy
-    fluxfile: /home/triggs/fisaz/monitor/resources/test/uptime_format.flux
+  #  calendar: Lazy
+    fluxfile: uptime_format.flux
     severity: 1
     match: 1 day
     comparison: substr
@@ -82,17 +82,17 @@ checks:
       - _field
       - _measurement
     interval: 10
-    target: xapi
+    target: logonly
 targets: 
   postfix:
     method: postfix
-    templatefile: /home/triggs/fisaz/monitor/resources/test/email.tmpl
+    templatefile: email.tmpl
     srcemail: stephen.trigg@fisglobal.com
     dstemail: fis.wm-azure.admins@fisglobal.com
   xapi:
     method: xapi
-    templatefile: /home/triggs/fisaz/monitor/resources/test/gx.tmpl
+    templatefile: gx.tmpl
     targeturl: https://fisglobal.xmatters.com/api/integration/1/functions/0295db39-831a-4fad-a30d-d2d821974232/triggers?apiKey=5f13a481-aa3b-479c-af7c-4430fc983801
   logonly:
     method: logger
-    templatefile: /home/triggs/fisaz/monitor/resources/test/gx.tmpl
+    templatefile: gx.tmpl

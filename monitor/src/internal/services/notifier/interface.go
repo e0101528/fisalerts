@@ -5,9 +5,12 @@ import (
 )
 
 type INotifier interface {
-	SendAlert(map[string]string)
+	SendAlert(Content)
 	GetTemplate() (*template.Template, error)
 	GetTargetURL() string
 }
 
-type Content map[string]string
+type Content struct {
+	Fields map[string]string
+	Labels map[string]string
+}
