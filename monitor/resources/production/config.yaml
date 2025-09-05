@@ -86,16 +86,16 @@ calendars:
 targets: 
   postfix:
     method: postfix
-    templatefile: /root/fisaz/monitor/resources/production/email.tmpl
+    templatefile: email.tmpl
     srcemail: stephen.trigg@fisglobal.com
     dstemail: fis.wm-azure.admins@fisglobal.com
   xapi:
     method: xapi
-    templatefile: /root/fisaz/monitor/resources/production/gx.tmpl
+    templatefile: gx.tmpl
     targeturl: https://fisglobal.xmatters.com/api/integration/1/functions/0295db39-831a-4fad-a30d-d2d821974232/triggers?apiKey=5f13a481-aa3b-479c-af7c-4430fc983801
   logonly:
     method: logger
-    templatefile: /root/fisaz/monitor/resources/production/gx.tmpl
+    templatefile: gx.tmpl
 checks:
   - name: Broadridge Net Down
     detail: Broadridge is unreachable
