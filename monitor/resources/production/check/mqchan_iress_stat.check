@@ -1,7 +1,7 @@
   - name: MQ Channel Down - IRESS
     detail: There is a status other than OK/Running on IRESS MQ Channel
     calendar: OfficeHours
-    fluxfile: /root/fisaz/monitor/resources/production/flux/mqchan_iress_stat.flux
+    fluxfile: flux/mqchan_iress_stat.flux
     severity: 1
     threshold: 0
     comparison: gt

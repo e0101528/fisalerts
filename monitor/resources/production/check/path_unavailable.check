@@ -1,7 +1,7 @@
   - name: Path Service Not Available
     detail: The path service not available message is in the Admin Log. This indicates a serious Weblogic Issue. Singleton?
     calendar: OfficeHours
-    fluxfile: /root/fisaz/monitor/resources/production/flux/path_unavailable.flux
+    fluxfile: flux/path_unavailable.flux
     severity: 1
 #    match: path service not available
 #    comparison: substr

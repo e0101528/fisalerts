@@ -1,6 +1,6 @@
   - name: JVM Queue Usgage
     detail: The JVM Heap usage has exceeded the 95 percent threshold
-    fluxfile: /root/fisaz/monitor/resources/production/flux/wl_jms_queue.flux
+    fluxfile: flux/wl_jms_queue.flux
     severity: 1
     threshold: 2000
     comparison: gt

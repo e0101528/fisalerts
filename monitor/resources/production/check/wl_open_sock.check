@@ -1,6 +1,6 @@
   - name: Weblogic Socket Open Count
     detail: The socket count for weblogic has exceeded a threshold of 850
-    fluxfile: /root/fisaz/monitor/resources/production/flux/wl_open_sock.flux
+    fluxfile: flux/wl_open_sock.flux
     severity: 1
     threshold: 850
     comparison: gt

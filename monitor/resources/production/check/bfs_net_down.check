@@ -1,6 +1,6 @@
   - name: Broadridge Net Down
     detail: Broadridge is unreachable
-    fluxfile: /root/fisaz/monitor/resources/production/flux/bfs_net_down.flux
+    fluxfile: flux/bfs_net_down.flux
     severity: 1
     threshold: 1
     calendar: OfficeHours 

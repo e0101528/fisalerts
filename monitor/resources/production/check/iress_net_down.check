@@ -1,6 +1,6 @@
   - name: IRESS Net Down
     detail: IRESSS is unreachable
-    fluxfile: /root/fisaz/monitor/resources/production/flux/iress_net_down.flux
+    fluxfile: flux/iress_net_down.flux
     severity: 1
     threshold: 1
     calendar: OfficeHours

@@ -1,7 +1,7 @@
   - name: Cannot Submit CFG.USCMUserSync
     detail: The CFG.USCMUserSync job cannot be submitted. This is a user sync failure.
     calendar: OfficeHours
-    fluxfile: /root/fisaz/monitor/resources/production/flux/cannot_submit.flux
+    fluxfile: flux/cannot_submit.flux
     severity: 1
 #    match: CFG.USCMUserSync
 #    comparison: substr

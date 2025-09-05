@@ -1,6 +1,6 @@
   - name: Intact IntactPollerEJBBean Error
     detail: The IntactPollerEJBBean has produced an ERROR level log alert
-    fluxfile: /root/fisaz/monitor/resources/production/flux/intact_bean_check.flux
+    fluxfile: flux/intact_bean_check.flux
     severity: 1
     threshold: 0
     comparison: gt

@@ -1,6 +1,6 @@
   - name: BPSA Excessive Queue Length
     detail: The BPSA MQ Queue has more than 10000 outstanding messages exceeding the alert threshold
-    fluxfile: /root/fisaz/monitor/resources/production/flux/bpsa_queue_length.flux
+    fluxfile: flux/bpsa_queue_length.flux
     severity: 1
     threshold: 10000
     comparison: ge

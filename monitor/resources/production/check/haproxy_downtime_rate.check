@@ -1,7 +1,7 @@
   - name: HAProxy Backend Down
     detail: checks for a non-zero connection failure rate from HAProxy to backend servers.
     calendar: OfficeHours
-    fluxfile: /root/fisaz/monitor/resources/production/flux/haproxy_downtime_rate.flux
+    fluxfile: flux/haproxy_downtime_rate.flux
     severity: 1
     threshold: 0.0
     comparison: gt
