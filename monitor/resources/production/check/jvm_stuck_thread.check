@@ -8,5 +8,6 @@
       - host
       - _field
       - _measurement
+      - wls_ServerRuntime
     interval: 20
     target: postfix
