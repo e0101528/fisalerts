@@ -201,7 +201,7 @@ checks:
       - proxy
       - sv
     interval: 120 
-    target: logonly
+    target: postfix
   - name: Intact IntactPollerEJBBean Error
     detail: The IntactPollerEJBBean has produced an ERROR level log alert
     fluxfile: flux/intact_bean_check.flux
@@ -351,18 +351,18 @@ checks:
     interval: 20
     target: postfix
   - name: IOWait Max
-    detail: checks for maximum IOWait exceeding a threshold
+    detail: Minimum IOWait has exceeded a 9.5% CPU threshold over 5 mins
     calendar: OfficeHours
     fluxfile: flux/usage_iowait.flux
     severity: 1
-    threshold: 0.003
+    threshold: 9.5 
     comparison: gt
     tags: 
       - host
       - _field
       - _measurement
-    interval: 15
-    target: logonly
+    interval: 300
+    target: postfix
   - name: Volume Uage
     detail: checks for per mountpoint volume percent used threshold 
     fluxfile: flux/volume_usage.flux
