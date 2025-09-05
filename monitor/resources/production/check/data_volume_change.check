@@ -1,0 +1,13 @@
+  - name: Unusual Data Volume change
+    detail: Looks for differences between daily data volume changes
+    fluxfile: flux/data_volume_change.flux
+    severity: 1
+    threshold: 0
+    comparison: gt 
+    tags: 
+      - host
+      - _field
+      - _measurement
+      _ path
+    interval: 3600
+    target: postfix

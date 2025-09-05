@@ -1,6 +1,0 @@
-from(bucket: "telegraf") 
-  |> range (start: -1m) 
-  |> filter (fn: (r) => r["host"] == "cibccaprodadm2.na1.prod.azure" ) 
-  |> filter (fn: (r) => r["_measurement"] == "system" ) 
-  |> filter (fn: (r) => r["_field"] == "uptime_format" ) 
-  |> last()
