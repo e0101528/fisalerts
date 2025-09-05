@@ -99,9 +99,9 @@ targets:
 checks:
   - name: Broadridge Net Down
     detail: Broadridge is unreachable
-    fluxfile: /root/fisaz/monitor/resources/production/flux/bfs_net_down.flux
+    fluxfile: flux/bfs_net_down.flux
     severity: 1
-    threshold: 0
+    threshold: 1
     calendar: OfficeHours 
     comparison: gt
     tags: 
@@ -115,7 +115,7 @@ checks:
     target: postfix
   - name: BPSA Excessive Queue Length
     detail: The BPSA MQ Queue has more than 10000 outstanding messages exceeding the alert threshold
-    fluxfile: /root/fisaz/monitor/resources/production/flux/bpsa_queue_length.flux
+    fluxfile: flux/bpsa_queue_length.flux
     severity: 1
     threshold: 10000
     comparison: ge
@@ -129,7 +129,7 @@ checks:
   - name: Cannot Submit CFG.USCMUserSync
     detail: The CFG.USCMUserSync job cannot be submitted. This is a user sync failure.
     calendar: OfficeHours
-    fluxfile: /root/fisaz/monitor/resources/production/flux/cannot_submit.flux
+    fluxfile: flux/cannot_submit.flux
     severity: 1
 #    match: CFG.USCMUserSync
 #    comparison: substr
@@ -144,9 +144,9 @@ checks:
     target: postfix
   - name: Feedhub Net Down
     detail: Feedhub is unreachable
-    fluxfile: /root/fisaz/monitor/resources/production/flux/feedhub_net_down.flux
+    fluxfile: flux/feedhub_net_down.flux
     severity: 1
-    threshold: 0
+    threshold: 1
     calendar: OfficeHours 
     comparison: gt
     tags: 
@@ -160,9 +160,9 @@ checks:
     target: postfix
   - name: Fundserv Net Down
     detail: The MQ endpoint at Fundserv on 142.148.10.116 port 1501 is unreachable
-    fluxfile: /root/fisaz/monitor/resources/production/flux/fundserv_net_down.flux
+    fluxfile: flux/fundserv_net_down.flux
     severity: 1
-    threshold: 0
+    threshold: 1
     calendar: Fundserv
     comparison: gt
     tags: 
@@ -177,7 +177,7 @@ checks:
   - name: HAProxy Backend Down
     detail: checks for a non-zero connection failure rate from HAProxy to backend servers.
     calendar: OfficeHours
-    fluxfile: /root/fisaz/monitor/resources/production/flux/haproxy_downtime_rate.flux
+    fluxfile: flux/haproxy_downtime_rate.flux
     severity: 1
     threshold: 0.0
     comparison: gt
@@ -191,7 +191,7 @@ checks:
     target: logonly
   - name: Intact IntactPollerEJBBean Error
     detail: The IntactPollerEJBBean has produced an ERROR level log alert
-    fluxfile: /root/fisaz/monitor/resources/production/flux/intact_bean_check.flux
+    fluxfile: flux/intact_bean_check.flux
     severity: 1
     threshold: 0
     comparison: gt
@@ -203,9 +203,9 @@ checks:
     target: postfix
   - name: IRESS Net Down
     detail: IRESSS is unreachable
-    fluxfile: /root/fisaz/monitor/resources/production/flux/iress_net_down.flux
+    fluxfile: flux/iress_net_down.flux
     severity: 1
-    threshold: 0
+    threshold: 1
     calendar: OfficeHours
     comparison: gt
     tags: 
@@ -219,7 +219,7 @@ checks:
     target: postfix
   - name: JVM Heap Usgage
     detail: The JVM Heap usage has exceeded the 95 percent threshold
-    fluxfile: /root/fisaz/monitor/resources/production/flux/jvm_heap_use.flux
+    fluxfile: flux/jvm_heap_use.flux
     severity: 1
     threshold: 0.95
     comparison: gt
@@ -231,7 +231,7 @@ checks:
     target: postfix
   - name: MQ Channel Down - Fundserv
     detail: There is a status other than OK/Running on Fundserv MQ Channel
-    fluxfile: /root/fisaz/monitor/resources/production/flux/mqchan_fs_stat.flux
+    fluxfile: flux/mqchan_fs_stat.flux
     severity: 1
     threshold: 0
     calendar: Fundserv
@@ -245,7 +245,7 @@ checks:
   - name: MQ Channel Down - INTACT
     detail: There is a status other than OK/Running on INTACT MQ Channel
     calendar: OfficeHours
-    fluxfile: /root/fisaz/monitor/resources/production/flux/mqchan_int_stat.flux
+    fluxfile: flux/mqchan_int_stat.flux
     severity: 1
     threshold: 0
     comparison: gt
@@ -258,7 +258,7 @@ checks:
   - name: MQ Channel Down - IRESS
     detail: There is a status other than OK/Running on IRESS MQ Channel
     calendar: OfficeHours
-    fluxfile: /root/fisaz/monitor/resources/production/flux/mqchan_iress_stat.flux
+    fluxfile: flux/mqchan_iress_stat.flux
     severity: 1
     threshold: 0
     comparison: gt
@@ -271,7 +271,7 @@ checks:
   - name: Path Service Not Available
     detail: The path service not available message is in the Admin Log. This indicates a serious Weblogic Issue. Singleton?
     calendar: OfficeHours
-    fluxfile: /root/fisaz/monitor/resources/production/flux/path_unavailable.flux
+    fluxfile: flux/path_unavailable.flux
     severity: 1
 #    match: path service not available
 #    comparison: substr
@@ -286,7 +286,7 @@ checks:
     target: postfix
   - name: Reuters Net Down
     detail: Reuters is unreachable
-    fluxfile: /root/fisaz/monitor/resources/production/flux/reuters_net_down.flux
+    fluxfile: flux/reuters_net_down.flux
     severity: 1
     threshold: 0
     calendar: OfficeHours
@@ -302,7 +302,7 @@ checks:
     target: postfix
   - name: JVM Queue Usgage
     detail: The JVM Heap usage has exceeded the 95 percent threshold
-    fluxfile: /root/fisaz/monitor/resources/production/flux/wl_jms_queue.flux
+    fluxfile: flux/wl_jms_queue.flux
     severity: 1
     threshold: 2000
     comparison: gt
@@ -314,7 +314,7 @@ checks:
     target: postfix
   - name: Weblogic Socket Open Count
     detail: The socket count for weblogic has exceeded a threshold of 850
-    fluxfile: /root/fisaz/monitor/resources/production/flux/wl_open_sock.flux
+    fluxfile: flux/wl_open_sock.flux
     severity: 1
     threshold: 850
     comparison: gt
