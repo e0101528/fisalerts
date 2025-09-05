@@ -1,0 +1,99 @@
+organization: fb67cbd5fa6747e0
+self: cibccaprodadm2
+azuresub: ca049151-8cb9-421b-b536-251fa31c9a62
+azurerg: wealthware_cibc-prod-sql-rg
+ipaddr: 10.73.87.73
+assignmentgroup: "TSG - Wealthware" 
+appgroupemail: fis.wm-azure.admins@fisglobal.com
+influxdb:
+  serverurl: http://cibccaprodadm2.na1.prod.azure:8086
+  org: FIS
+  authtoken: CKjDnii7XrgokGyr3wovRrxKTdXfLY3LvEBOI3OMDzB_qHoMPpvlFlqRnwRVOkpx-FQEo7ZUrT-xDMaEFOuMTQ==
+go-server:
+  host: localhost
+  port: 9911
+  rootdir: /alert
+  request_timeout_secs: 30
+calendars:
+  AllHours:
+      name: Twenty Four By Seven
+      maintenanceday: sunday
+      maintenancestart: 00h00m
+      maintenancestop: 04h30m
+      activehoursstart: 00h00m
+      activehoursend: 23h59m
+      activedays:
+        - monday
+        - tuesday
+        - wednesday
+        - thursday
+        - friday
+        - saturday
+        - sunday
+  OfficeHours:
+      name: Office Hours
+      maintenanceday: sunday
+      maintenancestart: 00h00m
+      maintenancestop: 04h30m
+      activehoursstart: 08h00m
+      activehoursend: 18h00m
+      activedays:
+        - monday
+        - tuesday
+        - wednesday
+        - thursday
+        - friday
+      holidays: 
+        - NewYear
+        - GoodFriday
+        - EasterMonday
+        - VictoriaDay
+        - CanadaDay
+        - CivicDay
+        - LabourDay
+        - ThanksgivingDay
+        - NationalDayForTruthAndReconciliation
+        - RemembranceDay
+        - ChristmasDay
+        - BoxingDay
+  Fundserv:
+      name: Fundserv Maintenance
+      maintenanceday: daily
+      maintenancestart: 03h45m
+      maintenancestop: 04h15m
+      activehoursstart: 00h00m
+      activehoursend: 23h59m
+      activedays:
+        - monday
+        - tuesday
+        - wednesday
+        - thursday
+        - friday
+        - saturday
+      holidays: 
+        - NewYear
+        - GoodFriday
+        - EasterMonday
+        - VictoriaDay
+        - CanadaDay
+        - CivicDay
+        - LabourDay
+        - ThanksgivingDay
+        - NationalDayForTruthAndReconciliation
+        - RemembranceDay
+        - ChristmasDay
+        - BoxingDay 
+targets: 
+  postfix:
+    method: postfix
+    templatefile: /root/fisaz/monitor/resources/production/email.tmpl
+    srcemail: stephen.trigg@fisglobal.com
+    dstemail: fis.wm-azure.admins@fisglobal.com
+  xapi:
+    method: xapi
+    templatefile: /root/fisaz/monitor/resources/production/gx.tmpl
+    targeturl: https://fisglobal.xmatters.com/api/integration/1/functions/0295db39-831a-4fad-a30d-d2d821974232/triggers?apiKey=5f13a481-aa3b-479c-af7c-4430fc983801
+  logonly:
+    method: logger
+    templatefile: /root/fisaz/monitor/resources/production/gx.tmpl
+checks:

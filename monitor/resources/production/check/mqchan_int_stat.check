@@ -1,0 +1,13 @@
+  - name: MQ Channel Down - INTACT
+    detail: There is a status other than OK/Running on INTACT MQ Channel
+    calendar: OfficeHours
+    fluxfile: /root/fisaz/monitor/resources/production/flux/mqchan_int_stat.flux
+    severity: 1
+    threshold: 0
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 300
+    target: postfix

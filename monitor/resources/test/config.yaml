@@ -1,0 +1,98 @@
+organization: fb67cbd5fa6747e0
+self: cibccaprodadm2
+azuresub: ca049151-8cb9-421b-b536-251fa31c9a62
+azurerg: wealthware_cibc-prod-sql-rg
+ipaddr: 10.73.87.73
+assignmentgroup: Wealthware
+appgroupemail: fis.wm-azure.admins@fisglobal.com
+influxdb:
+  serverurl: http://localhost:8086
+  org: Home 
+  authtoken: EeGzcgUGCbcU8R_PrQUJ1w71hN50u1AJhA0HUoJ2egO_9BKfMLECaTZ_Zj83DrUqVLb3qKvvjK15z7ubuaQVHA==
+go-server:
+  host: localhost
+  port: 9911
+  rootdir: /alert
+  request_timeout_secs: 30
+calendars:
+  OfficeHours:
+      name: Office Hours
+      maintenanceday: sunday
+      maintenancestart: 00h00m
+      maintenancestop: 04h30m
+      activehoursstart: 08h00m
+      activehoursend: 18h00m
+      activedays:
+        - monday
+        - tuesday
+        - wednesday
+        - thursday
+        - friday
+      holidays: 
+        - ChristmasDay
+  Lazy:
+      name: Lazy Hours
+      maintenanceday: monday
+      maintenancestart: 10h15m
+      maintenancestop: 10h50m
+      activehoursstart: 10h12m
+      activehoursend: 11h00m
+      activedays:
+        - monday
+        - tuesday
+        - wednesday
+        - thursday
+      holidays: 
+        - ChristmasDay     
+checks:
+  - name: IOWait Max
+    detail: checks for maximum IOWait exceeding a threshold
+    calendar: OfficeHours
+    fluxfile: /home/triggs/fisaz/monitor/resources/test/usage_iowait.flux
+    severity: 1
+    threshold: 0.003
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 15
+    target: logonly
+  - name: Idle Min
+    detail: checks for minimum CPU Idle below a threshold
+    fluxfile: /home/triggs/fisaz/monitor/resources/test/usage_idle.flux
+    severity: 1
+    threshold: 90
+    comparison: le
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 20
+    target: postfix
+  - name: System Uptime
+    detail: checks for minimum CPU Idle below a threshold
+    calendar: Lazy
+    fluxfile: /home/triggs/fisaz/monitor/resources/test/uptime_format.flux
+    severity: 1
+    match: 1 day
+    comparison: substr
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 10
+    target: xapi
+targets: 
+  postfix:
+    method: postfix
+    templatefile: /home/triggs/fisaz/monitor/resources/test/email.tmpl
+    srcemail: stephen.trigg@fisglobal.com
+    dstemail: fis.wm-azure.admins@fisglobal.com
+  xapi:
+    method: xapi
+    templatefile: /home/triggs/fisaz/monitor/resources/test/gx.tmpl
+    targeturl: https://fisglobal.xmatters.com/api/integration/1/functions/0295db39-831a-4fad-a30d-d2d821974232/triggers?apiKey=5f13a481-aa3b-479c-af7c-4430fc983801
+  logonly:
+    method: logger
+    templatefile: /home/triggs/fisaz/monitor/resources/test/gx.tmpl

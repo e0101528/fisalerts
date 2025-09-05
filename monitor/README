@@ -1,0 +1,12 @@
+To build: 
+
+ cd src/cmd
+ go build -o monitor
+
+To merge config: 
+  cd resources/production
+  cat config_bare.yaml check/*.check > config.yaml
+
+For each check there is a corresponding flux query.
+The indentation in the check is CRITICAL. They are simply parts of a YAML map[string]struct under the 'checks' key.  
+They are separated into check files to be merged by the above 'cat' command to simplify editing and ease reading. 

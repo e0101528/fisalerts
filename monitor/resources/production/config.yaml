@@ -1,0 +1,326 @@
+organization: fb67cbd5fa6747e0
+self: cibccaprodadm2
+azuresub: ca049151-8cb9-421b-b536-251fa31c9a62
+azurerg: wealthware_cibc-prod-sql-rg
+ipaddr: 10.73.87.73
+assignmentgroup: "TSG - Wealthware" 
+appgroupemail: fis.wm-azure.admins@fisglobal.com
+influxdb:
+  serverurl: http://cibccaprodadm2.na1.prod.azure:8086
+  org: FIS
+  authtoken: CKjDnii7XrgokGyr3wovRrxKTdXfLY3LvEBOI3OMDzB_qHoMPpvlFlqRnwRVOkpx-FQEo7ZUrT-xDMaEFOuMTQ==
+go-server:
+  host: localhost
+  port: 9911
+  rootdir: /alert
+  request_timeout_secs: 30
+calendars:
+  AllHours:
+      name: Twenty Four By Seven
+      maintenanceday: sunday
+      maintenancestart: 00h00m
+      maintenancestop: 04h30m
+      activehoursstart: 00h00m
+      activehoursend: 23h59m
+      activedays:
+        - monday
+        - tuesday
+        - wednesday
+        - thursday
+        - friday
+        - saturday
+        - sunday
+  OfficeHours:
+      name: Office Hours
+      maintenanceday: sunday
+      maintenancestart: 00h00m
+      maintenancestop: 04h30m
+      activehoursstart: 08h00m
+      activehoursend: 18h00m
+      activedays:
+        - monday
+        - tuesday
+        - wednesday
+        - thursday
+        - friday
+      holidays: 
+        - NewYear
+        - GoodFriday
+        - EasterMonday
+        - VictoriaDay
+        - CanadaDay
+        - CivicDay
+        - LabourDay
+        - ThanksgivingDay
+        - NationalDayForTruthAndReconciliation
+        - RemembranceDay
+        - ChristmasDay
+        - BoxingDay
+  Fundserv:
+      name: Fundserv Maintenance
+      maintenanceday: daily
+      maintenancestart: 03h45m
+      maintenancestop: 04h15m
+      activehoursstart: 00h00m
+      activehoursend: 23h59m
+      activedays:
+        - monday
+        - tuesday
+        - wednesday
+        - thursday
+        - friday
+        - saturday
+      holidays: 
+        - NewYear
+        - GoodFriday
+        - EasterMonday
+        - VictoriaDay
+        - CanadaDay
+        - CivicDay
+        - LabourDay
+        - ThanksgivingDay
+        - NationalDayForTruthAndReconciliation
+        - RemembranceDay
+        - ChristmasDay
+        - BoxingDay 
+targets: 
+  postfix:
+    method: postfix
+    templatefile: /root/fisaz/monitor/resources/production/email.tmpl
+    srcemail: stephen.trigg@fisglobal.com
+    dstemail: fis.wm-azure.admins@fisglobal.com
+  xapi:
+    method: xapi
+    templatefile: /root/fisaz/monitor/resources/production/gx.tmpl
+    targeturl: https://fisglobal.xmatters.com/api/integration/1/functions/0295db39-831a-4fad-a30d-d2d821974232/triggers?apiKey=5f13a481-aa3b-479c-af7c-4430fc983801
+  logonly:
+    method: logger
+    templatefile: /root/fisaz/monitor/resources/production/gx.tmpl
+checks:
+  - name: Broadridge Net Down
+    detail: Broadridge is unreachable
+    fluxfile: /root/fisaz/monitor/resources/production/flux/bfs_net_down.flux
+    severity: 1
+    threshold: 0
+    calendar: OfficeHours 
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+      - server
+      - port 
+      - service
+    interval: 300
+    target: postfix
+  - name: BPSA Excessive Queue Length
+    detail: The BPSA MQ Queue has more than 10000 outstanding messages exceeding the alert threshold
+    fluxfile: /root/fisaz/monitor/resources/production/flux/bpsa_queue_length.flux
+    severity: 1
+    threshold: 10000
+    comparison: ge
+    tags: 
+      - host
+      - _field
+      - _measurement
+      - queue
+    interval: 120
+    target: postfix
+  - name: Cannot Submit CFG.USCMUserSync
+    detail: The CFG.USCMUserSync job cannot be submitted. This is a user sync failure.
+    calendar: OfficeHours
+    fluxfile: /root/fisaz/monitor/resources/production/flux/cannot_submit.flux
+    severity: 1
+#    match: CFG.USCMUserSync
+#    comparison: substr
+# The flux return a count of matching lines
+    threshold: 0.0
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 300
+    target: postfix
+  - name: Feedhub Net Down
+    detail: Feedhub is unreachable
+    fluxfile: /root/fisaz/monitor/resources/production/flux/feedhub_net_down.flux
+    severity: 1
+    threshold: 0
+    calendar: OfficeHours 
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+      - server
+      - port 
+      - service
+    interval: 300
+    target: postfix
+  - name: Fundserv Net Down
+    detail: The MQ endpoint at Fundserv on 142.148.10.116 port 1501 is unreachable
+    fluxfile: /root/fisaz/monitor/resources/production/flux/fundserv_net_down.flux
+    severity: 1
+    threshold: 0
+    calendar: Fundserv
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+      - server
+      - port
+      - service
+    interval: 300
+    target: postfix
+  - name: HAProxy Backend Down
+    detail: checks for a non-zero connection failure rate from HAProxy to backend servers.
+    calendar: OfficeHours
+    fluxfile: /root/fisaz/monitor/resources/production/flux/haproxy_downtime_rate.flux
+    severity: 1
+    threshold: 0.0
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+      - proxy
+      - sv
+    interval: 120 
+    target: logonly
+  - name: Intact IntactPollerEJBBean Error
+    detail: The IntactPollerEJBBean has produced an ERROR level log alert
+    fluxfile: /root/fisaz/monitor/resources/production/flux/intact_bean_check.flux
+    severity: 1
+    threshold: 0
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 300
+    target: postfix
+  - name: IRESS Net Down
+    detail: IRESSS is unreachable
+    fluxfile: /root/fisaz/monitor/resources/production/flux/iress_net_down.flux
+    severity: 1
+    threshold: 0
+    calendar: OfficeHours
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+      - server
+      - port 
+      - service
+    interval: 300
+    target: postfix
+  - name: JVM Heap Usgage
+    detail: The JVM Heap usage has exceeded the 95 percent threshold
+    fluxfile: /root/fisaz/monitor/resources/production/flux/jvm_heap_use.flux
+    severity: 1
+    threshold: 0.95
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 180
+    target: postfix
+  - name: MQ Channel Down - Fundserv
+    detail: There is a status other than OK/Running on Fundserv MQ Channel
+    fluxfile: /root/fisaz/monitor/resources/production/flux/mqchan_fs_stat.flux
+    severity: 1
+    threshold: 0
+    calendar: Fundserv
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 300
+    target: postfix
+  - name: MQ Channel Down - INTACT
+    detail: There is a status other than OK/Running on INTACT MQ Channel
+    calendar: OfficeHours
+    fluxfile: /root/fisaz/monitor/resources/production/flux/mqchan_int_stat.flux
+    severity: 1
+    threshold: 0
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 300
+    target: postfix
+  - name: MQ Channel Down - IRESS
+    detail: There is a status other than OK/Running on IRESS MQ Channel
+    calendar: OfficeHours
+    fluxfile: /root/fisaz/monitor/resources/production/flux/mqchan_iress_stat.flux
+    severity: 1
+    threshold: 0
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 300
+    target: postfix
+  - name: Path Service Not Available
+    detail: The path service not available message is in the Admin Log. This indicates a serious Weblogic Issue. Singleton?
+    calendar: OfficeHours
+    fluxfile: /root/fisaz/monitor/resources/production/flux/path_unavailable.flux
+    severity: 1
+#    match: path service not available
+#    comparison: substr
+# flux return count of matching strings not  a string to match..
+    threshold: 0.0
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 300
+    target: postfix
+  - name: Reuters Net Down
+    detail: Reuters is unreachable
+    fluxfile: /root/fisaz/monitor/resources/production/flux/reuters_net_down.flux
+    severity: 1
+    threshold: 0
+    calendar: OfficeHours
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+      - server
+      - port 
+      - service
+    interval: 300
+    target: postfix
+  - name: JVM Queue Usgage
+    detail: The JVM Heap usage has exceeded the 95 percent threshold
+    fluxfile: /root/fisaz/monitor/resources/production/flux/wl_jms_queue.flux
+    severity: 1
+    threshold: 2000
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 120
+    target: postfix
+  - name: Weblogic Socket Open Count
+    detail: The socket count for weblogic has exceeded a threshold of 850
+    fluxfile: /root/fisaz/monitor/resources/production/flux/wl_open_sock.flux
+    severity: 1
+    threshold: 850
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 120
+    target: postfix

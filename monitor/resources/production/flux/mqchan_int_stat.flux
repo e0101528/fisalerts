@@ -1,0 +1,7 @@
+from(bucket: "telegraf")
+  |> range(start: -5m)
+  |> filter(fn: (r) => r["_measurement"] == "channel")
+  |> filter(fn: (r) => r["channel"] == "TCP.WG70P1.INTACT.01")
+  |> filter(fn: (r) => r["_field"] == "status")
+  |> filter(fn:(r) => r["_value"] != 3)
+  |> count()

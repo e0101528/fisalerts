@@ -1,0 +1,16 @@
+  - name: Feedhub Net Down
+    detail: Feedhub is unreachable
+    fluxfile: /root/fisaz/monitor/resources/production/flux/feedhub_net_down.flux
+    severity: 1
+    threshold: 0
+    calendar: OfficeHours 
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+      - server
+      - port 
+      - service
+    interval: 300
+    target: postfix

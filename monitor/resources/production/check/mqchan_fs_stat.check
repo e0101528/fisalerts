@@ -1,0 +1,13 @@
+  - name: MQ Channel Down - Fundserv
+    detail: There is a status other than OK/Running on Fundserv MQ Channel
+    fluxfile: /root/fisaz/monitor/resources/production/flux/mqchan_fs_stat.flux
+    severity: 1
+    threshold: 0
+    calendar: Fundserv
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 300
+    target: postfix

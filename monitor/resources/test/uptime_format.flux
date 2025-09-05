@@ -1,0 +1,5 @@
+from(bucket: "telegraf") 
+  |> range (start: -1m) 
+  |> filter (fn: (r) => r["_measurement"] == "system" ) 
+  |> filter (fn: (r) => r["_field"] == "uptime_format" ) 
+  |> last()
