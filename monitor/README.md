@@ -32,26 +32,8 @@ To build the daemon
         path to config directory
 ###  -log-level int
         0-4 (error, warn, info, debug, dump)
-
-## Superflous flags
-These are inherited from the xmrelay code - at the moment, the webserver related flags are unused, since the daemon no longer relays. They have planned used that will either be implemented eventually or these will be removed. All the config belongs in the YAML. 
- 
-###  -log-format string
-        log format - 'json' or 'pretty' (default "json")
 ###  -live
         enable development mode
-###  -webserver-host string
-        webserver host (usually 0.0.0.0)
-###  -webserver-port int
-        webserver port 
-###  -webserver-request-timeout-secs int
-        webserver request timeout in seconds (default 60)
-###  -webserver-root-dir string
-        webserver root directory (default "/web")
-###  -webserver-tls-cert-filepath string
-        TLS certificate file path
-###  -webserver-tls-key-filepath string
-        TLS key file path
 
 
 ## YAML Configuration File
