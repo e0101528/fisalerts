@@ -1,0 +1,12 @@
+  - name: No Job Control Record
+    detail: checks for the presence of job control error messages
+    fluxfile: flux/no_job_record.flux
+    severity: 1
+    threshold: 0
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 120
+    target: postfix

@@ -1,0 +1,12 @@
+  - name: Idle Min
+    detail: checks for minimum CPU Idle below a threshold
+    fluxfile: flux/usage_idle.flux
+    severity: 1
+    threshold: 90
+    comparison: le
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 20
+    target: postfix

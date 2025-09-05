@@ -1,0 +1,13 @@
+  - name: IOWait Max
+    detail: checks for maximum IOWait exceeding a threshold
+    calendar: OfficeHours
+    fluxfile: flux/usage_iowait.flux
+    severity: 1
+    threshold: 0.003
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 15
+    target: logonly

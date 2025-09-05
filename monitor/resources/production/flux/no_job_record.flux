@@ -7,4 +7,4 @@ from(bucket: "telegraf")
   |> filter(fn: (r)  => r["level"] == "ERROR")
   |> filter(fn: (r) => strings.containsStr(v: r._value, substr: "No job control record found") == true)
   |> duplicate(column: "_stop", as: "_time")
-
+  |> count()
