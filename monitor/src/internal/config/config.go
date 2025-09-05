@@ -30,9 +30,13 @@ func LoadAppConfig() (appConfig ApplicationConfig, err error) {
 	appConfig.MaintenanceMode = !commandLineOptions.Live
 	for i, _ := range appConfig.Checks {
 		if appConfig.Checks[i].FluxFile != "" {
-			utils.Info("Reading flux file %s\n", appConfig.Checks[i].FluxFile)
+			fluxfile := appConfig.Checks[i].FluxFile
+			if fluxfile[0] != '/' {
+				fluxfile = filepath.Join(commandLineOptions.ConfigDir, fluxfile)
+			}
+			utils.Info("Reading flux file %s\n", fluxfile)
 
-			fileBytes, err := os.ReadFile(appConfig.Checks[i].FluxFile)
+			fileBytes, err := os.ReadFile(fluxfile)
 			if err != nil {
 				utils.Error("Flux file read error for %s\n", appConfig.Checks[i].FluxFile)
 			} else {
