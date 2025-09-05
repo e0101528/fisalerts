@@ -2,7 +2,7 @@
     detail: checks for minimum CPU Idle below a threshold
     fluxfile: flux/usage_idle.flux
     severity: 1
-    threshold: 90
+    threshold: 10
     comparison: le
     tags: 
       - host
