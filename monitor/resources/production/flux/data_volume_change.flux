@@ -18,8 +18,8 @@ yl = yesterday |> last()
 t = union(tables: [tf, tl])
 y = union(tables: [yf, yl])
 
-yd = y |> difference() |> drop(columns: ["_start","_stop","_time","mode","fstype","_field","_measurement","device"])
-td = t |> difference() |> drop(columns: ["_start","_stop","_time","mode","fstype","_field","_measurement","device"])
+yd = y |> difference() |> drop(columns: ["_start","_stop","_time","mode","fstype","label","_field","_measurement","device"])
+td = t |> difference() |> drop(columns: ["_start","_stop","_time","mode","fstype","label","_field","_measurement","device"])
 // Table: keys: [_field, _measurement, device, fstype, host, mode, path]
 
 d = join.left(
