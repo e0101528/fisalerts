@@ -8,6 +8,6 @@
       - host
       - _field
       - _measurement
-      _ path
+      - path
     interval: 3600
     target: postfix
