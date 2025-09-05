@@ -349,7 +349,8 @@ checks:
       - _field
       - _measurement
     interval: 20
-    target: postfix  - name: IOWait Max
+    target: postfix
+  - name: IOWait Max
     detail: checks for maximum IOWait exceeding a threshold
     calendar: OfficeHours
     fluxfile: flux/usage_iowait.flux
