@@ -12,4 +12,4 @@
       - proxy
       - sv
     interval: 120 
-    target: logonly
+    target: postfix
