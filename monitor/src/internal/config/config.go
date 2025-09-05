@@ -30,12 +30,8 @@ func LoadAppConfig() (appConfig ApplicationConfig, err error) {
 	appConfig.MaintenanceMode = !commandLineOptions.Live
 	for i, _ := range appConfig.Checks {
 		if appConfig.Checks[i].FluxFile != "" {
-			fluxfile := appConfig.Checks[i].FluxFile
-			if fluxfile[0] != '/' {
-				utils.Info("Prepedning flux file with config file path %s\n", commandLineOptions.ConfigDir)
+			fluxfile := relative(appConfig.Checks[i].FluxFile, commandLineOptions.ConfigDir)
 
-				fluxfile = filepath.Join(commandLineOptions.ConfigDir, fluxfile)
-			}
 			utils.Info("Reading flux file %s\n", fluxfile)
 
 			fileBytes, err := os.ReadFile(fluxfile)
@@ -54,7 +50,7 @@ func LoadAppConfig() (appConfig ApplicationConfig, err error) {
 	appConfig.Notifiers = make(map[string]notifier.INotifier)
 	var tmpl *template.Template
 	for i, t := range appConfig.Targets {
-		fileBytes, e := os.ReadFile(t.TemplateFile)
+		fileBytes, e := os.ReadFile(relative(t.TemplateFile, commandLineOptions.ConfigDir))
 		if e == nil {
 			tmpl, e = template.New(i).Parse(string(fileBytes))
 		} else {
@@ -102,4 +98,12 @@ func getCommandLineOptions() (options CommandLineOptions, err error) {
 
 	err = flags.Parse(os.Args[1:])
 	return
+}
+
+func relative(filename string, defaultpath string) string {
+	if filename[0] != '/' {
+		utils.Debug("Prepending file path with default path %s\n", defaultpath)
+		filename = filepath.Join(defaultpath, filename)
+	}
+	return filename
 }
