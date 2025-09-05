@@ -142,6 +142,19 @@ checks:
       - _measurement
     interval: 300
     target: postfix
+  - name: Unusual Data Volume change
+    detail: Looks for differences between daily data volume changes
+    fluxfile: flux/data_volume_change.flux
+    severity: 1
+    threshold: 0
+    comparison: gt 
+    tags: 
+      - host
+      - _field
+      - _measurement
+      _ path
+    interval: 3600
+    target: postfix
   - name: Feedhub Net Down
     detail: Feedhub is unreachable
     fluxfile: flux/feedhub_net_down.flux
@@ -229,6 +242,19 @@ checks:
       - _measurement
     interval: 180
     target: postfix
+  - name: JVM Stuck Thread 
+    detail: the stuck thread count exceeds a threshold
+    fluxfile: flux/jvm_stuck_thread.flux
+    severity: 1
+    threshold: 0
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+      - wls_ServerRuntime
+    interval: 20
+    target: postfix
   - name: MQ Channel Down - Fundserv
     detail: There is a status other than OK/Running on Fundserv MQ Channel
     fluxfile: flux/mqchan_fs_stat.flux
@@ -268,7 +294,18 @@ checks:
       - _measurement
     interval: 300
     target: postfix
-  - name: Path Service Not Available
+  - name: No Job Control Record
+    detail: checks for the presence of job control error messages
+    fluxfile: flux/no_job_record.flux
+    severity: 1
+    threshold: 0
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 120
+    target: postfix  - name: Path Service Not Available
     detail: The path service not available message is in the Admin Log. This indicates a serious Weblogic Issue. Singleton?
     calendar: OfficeHours
     fluxfile: flux/path_unavailable.flux
@@ -299,6 +336,43 @@ checks:
       - port 
       - service
     interval: 300
+    target: postfix
+  - name: Idle Min
+    detail: checks for minimum CPU Idle below a threshold
+    fluxfile: flux/usage_idle.flux
+    severity: 1
+    threshold: 90
+    comparison: le
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 20
+    target: postfix  - name: IOWait Max
+    detail: checks for maximum IOWait exceeding a threshold
+    calendar: OfficeHours
+    fluxfile: flux/usage_iowait.flux
+    severity: 1
+    threshold: 0.003
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 15
+    target: logonly
+  - name: Volume Uage
+    detail: checks for per mountpoint volume percent used threshold 
+    fluxfile: flux/volume_usage.flux
+    severity: 1
+    threshold: 90
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+      - path
+    interval: 900
     target: postfix
   - name: JVM Queue Usgage
     detail: The JVM Heap usage has exceeded the 95 percent threshold
