@@ -57,10 +57,10 @@ func Run(ctx context.Context, c config.Check) {
 					utils.Debug("!!! AWWOOGA %s \n", k)
 					utils.Dump("Value", value)
 					if ok {
-						if !cal.InMaintenance(c.Calendar) {
-							nfy.SendAlert(content)
+						if cal.InMaintenance(c.Calendar) || cfg.MaintenanceMode {
+							utils.Debug("In maintenance mode - calendar[%v] - command line [%v]\n", cal.InMaintenance(c.Calendar), cfg.MaintenanceMode)
 						} else {
-							utils.Debug("In maintenance mode\n")
+							nfy.SendAlert(content)
 						}
 					}
 				} else {

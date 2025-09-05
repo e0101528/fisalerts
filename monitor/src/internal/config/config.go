@@ -14,10 +14,6 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-const (
-	defaultWebserverRequestTimeoutSecs = 60
-)
-
 func LoadAppConfig() (appConfig ApplicationConfig, err error) {
 	commandLineOptions, _ := getCommandLineOptions()
 	configFilePath := filepath.Join(commandLineOptions.ConfigDir, "config.yaml")
@@ -31,7 +27,7 @@ func LoadAppConfig() (appConfig ApplicationConfig, err error) {
 	if err != nil {
 		return
 	}
-
+	appConfig.MaintenanceMode = !commandLineOptions.Live
 	for i, _ := range appConfig.Checks {
 		if appConfig.Checks[i].FluxFile != "" {
 			utils.Info("Reading flux file %s\n", appConfig.Checks[i].FluxFile)
@@ -96,14 +92,7 @@ func getCommandLineOptions() (options CommandLineOptions, err error) {
 	flags.StringVar(&options.ConfigDir, "config-dir", "", "path to config directory")
 	flags.StringVar(&options.LogFormat, "log-format", "json", "log format - 'json' or 'pretty'")
 	flags.IntVar(&options.LogLevel, "log-level", 0, "0-4 (error, warn, info, debug, dump)")
-	flags.StringVar(&options.WebserverHost, "webserver-host", "", "webserver host")
-	flags.IntVar(&options.WebserverPort, "webserver-port", 0, "webserver port")
-	flags.StringVar(&options.WebserverRootDir, "webserver-root-dir", "/web", "webserver root directory")
-	flags.IntVar(&options.WebserverRequestTimeoutSecs, "webserver-request-timeout-secs",
-		defaultWebserverRequestTimeoutSecs, "webserver request timeout in seconds")
-	flags.StringVar(&options.WebserverTLSCertFilepath, "webserver-tls-cert-filepath", "", "TLS certificate file path")
-	flags.StringVar(&options.WebserverTLSKeyFilepath, "webserver-tls-key-filepath", "", "TLS key file path")
-	flags.BoolVar(&options.Live, "live", false, "enable development mode")
+	flags.BoolVar(&options.Live, "live", false, "enable alerts to live incident management")
 
 	err = flags.Parse(os.Args[1:])
 	return

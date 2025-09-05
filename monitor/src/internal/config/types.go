@@ -7,17 +7,10 @@ import (
 )
 
 type CommandLineOptions struct {
-	ConfigDir                   string `yaml:"config_dir"`
-	LogFormat                   string `yaml:"log_format"`
-	LogLevel                    int    `yaml:"log_level"`
-	WebserverHost               string `yaml:"webserver_host"`
-	WebserverPort               int    `yaml:"webserver_port"`
-	WebserverRootDir            string `yaml:"webserver_root_dir"`
-	WebserverRequestTimeoutSecs int    `yaml:"webserver_request_timeout_secs"`
-	WebserverTLSCertFilepath    string `yaml:"webserver_tls_cert_filepath"`
-	WebserverTLSKeyFilepath     string `yaml:"webserver_tls_key_filepath"`
-	Telemetry                   string `yaml:"telemetry"`
-	Live                        bool   `yaml:"live"`
+	ConfigDir string `yaml:"config_dir"`
+	LogFormat string `yaml:"log_format"`
+	LogLevel  int    `yaml:"log_level"`
+	Live      bool   `yaml:"live"`
 }
 
 // -----------------
@@ -79,6 +72,7 @@ type ApplicationConfig struct {
 	AppGroupEmail   string         `yaml:"appgroupemail"`
 	IPAddr          string         `yaml:"ipaddr"`
 	InfluxDB        InfluxDBConfig `yaml:"influxdb"`
+	MaintenanceMode bool
 }
 
 type Metric struct {
