@@ -2,7 +2,7 @@
     detail: Feedhub is unreachable
     fluxfile: /root/fisaz/monitor/resources/production/flux/feedhub_net_down.flux
     severity: 1
-    threshold: 0
+    threshold: 1
     calendar: OfficeHours 
     comparison: gt
     tags: 

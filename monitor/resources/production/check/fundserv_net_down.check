@@ -2,7 +2,7 @@
     detail: The MQ endpoint at Fundserv on 142.148.10.116 port 1501 is unreachable
     fluxfile: /root/fisaz/monitor/resources/production/flux/fundserv_net_down.flux
     severity: 1
-    threshold: 0
+    threshold: 1
     calendar: Fundserv
     comparison: gt
     tags: 
