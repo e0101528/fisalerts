@@ -32,6 +32,8 @@ func LoadAppConfig() (appConfig ApplicationConfig, err error) {
 		if appConfig.Checks[i].FluxFile != "" {
 			fluxfile := appConfig.Checks[i].FluxFile
 			if fluxfile[0] != '/' {
+				utils.Info("Prepedning flux file with config file path %s\n", commandLineOptions.ConfigDir)
+
 				fluxfile = filepath.Join(commandLineOptions.ConfigDir, fluxfile)
 			}
 			utils.Info("Reading flux file %s\n", fluxfile)
