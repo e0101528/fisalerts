@@ -119,7 +119,10 @@ func RtoC(cfg *config.ApplicationConfig, r map[string]interface{}, c config.Chec
 	if !ok {
 		content.Fields["_stop"] = time.Now().String()
 	}
-
+	content.Fields["_measurement"], ok = content.Labels["_measurement"]
+	if !ok {
+		content.Fields["_measurement"] = "derived/complex measurement"
+	}
 	//utils.Dumper(content)
 	return content
 }
