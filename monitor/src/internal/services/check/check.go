@@ -102,6 +102,23 @@ func RtoC(cfg *config.ApplicationConfig, r map[string]interface{}, c config.Chec
 	content.Fields["_type"] = "Threshold"
 	content.Fields["_check_name"] = c.Name
 	content.Fields["_check_id"] = c.ID
+	var ok bool
+	content.Fields["host"], ok = content.Labels["host"]
+	if !ok {
+		content.Fields["host"] = cfg.Webserver.Host
+	}
+	content.Fields["_time"], ok = content.Labels["_time"]
+	if !ok {
+		content.Fields["_time"] = time.Now().String()
+	}
+	content.Fields["_start"], ok = content.Labels["_start"]
+	if !ok {
+		content.Fields["_start"] = time.Now().String()
+	}
+	content.Fields["_stop"], ok = content.Labels["_stop"]
+	if !ok {
+		content.Fields["_stop"] = time.Now().String()
+	}
 
 	//utils.Dumper(content)
 	return content
