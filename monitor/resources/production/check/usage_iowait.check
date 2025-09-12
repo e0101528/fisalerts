@@ -1,9 +1,9 @@
   - name: IOWait Max
-    detail: Minimum IOWait has exceeded a 9.5% CPU threshold over 5 mins
+    detail: Minimum IOWait has exceeded a 25% CPU threshold for over 5 mins
     calendar: OfficeHours
     fluxfile: flux/usage_iowait.flux
     severity: 1
-    threshold: 9.5 
+    threshold: 25 
     comparison: gt
     tags: 
       - host
