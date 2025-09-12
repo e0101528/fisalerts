@@ -243,7 +243,7 @@ checks:
     interval: 180
     target: postfix
   - name: JVM Stuck Thread 
-    detail: the stuck thread count exceeds a threshold
+    detail: The stuck thread count exceeds a threshold
     fluxfile: flux/jvm_stuck_thread.flux
     severity: 1
     threshold: 0
@@ -253,7 +253,7 @@ checks:
       - _field
       - _measurement
       - wls_ServerRuntime
-    interval: 20
+    interval: 120
     target: postfix
   - name: MQ Channel Down - Fundserv
     detail: There is a status other than OK/Running on Fundserv MQ Channel
@@ -339,7 +339,7 @@ checks:
     interval: 300
     target: postfix
   - name: Idle Min
-    detail: checks for minimum CPU Idle below a threshold
+    detail: Checks for minimum CPU Idle below a 5% threshold for 80% of metrics
     fluxfile: flux/usage_idle.flux
     severity: 1
     threshold: 8
@@ -351,11 +351,11 @@ checks:
     interval: 600
     target: postfix
   - name: IOWait Max
-    detail: Minimum IOWait has exceeded a 9.5% CPU threshold over 5 mins
+    detail: Minimum IOWait has exceeded a 25% CPU threshold for over 5 mins
     calendar: OfficeHours
     fluxfile: flux/usage_iowait.flux
     severity: 1
-    threshold: 9.5 
+    threshold: 25 
     comparison: gt
     tags: 
       - host
@@ -363,8 +363,8 @@ checks:
       - _measurement
     interval: 300
     target: postfix
-  - name: Volume Uage
-    detail: checks for per mountpoint volume percent used threshold 
+  - name: Volume Usage
+    detail: Check for per mountpoint volume percent used threshold exceeds 80% 
     fluxfile: flux/volume_usage.flux
     severity: 1
     threshold: 90
@@ -376,8 +376,8 @@ checks:
       - path
     interval: 900
     target: postfix
-  - name: JVM Queue Usgage
-    detail: The JVM Heap usage has exceeded the 95 percent threshold
+  - name: JMS Queue Usgage
+    detail: The JMS queue length has exceeded 2000 outstanding messages
     fluxfile: flux/wl_jms_queue.flux
     severity: 1
     threshold: 2000

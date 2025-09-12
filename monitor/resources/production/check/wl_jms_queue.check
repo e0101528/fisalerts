@@ -1,5 +1,5 @@
-  - name: JVM Queue Usgage
-    detail: The JVM Heap usage has exceeded the 95 percent threshold
+  - name: JMS Queue Usgage
+    detail: The JMS queue length has exceeded 2000 outstanding messages
     fluxfile: flux/wl_jms_queue.flux
     severity: 1
     threshold: 2000

@@ -1,5 +1,5 @@
   - name: Idle Min
-    detail: checks for minimum CPU Idle below a threshold
+    detail: Checks for minimum CPU Idle below a 5% threshold for 80% of metrics
     fluxfile: flux/usage_idle.flux
     severity: 1
     threshold: 8

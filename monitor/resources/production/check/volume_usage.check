@@ -1,5 +1,5 @@
-  - name: Volume Uage
-    detail: checks for per mountpoint volume percent used threshold 
+  - name: Volume Usage
+    detail: Check for per mountpoint volume percent used threshold exceeds 80% 
     fluxfile: flux/volume_usage.flux
     severity: 1
     threshold: 90

@@ -1,5 +1,5 @@
 from(bucket: "telegraf")
-  |> range(start: -5m)
+  |> range(start: -2m)
   |> filter(fn: (r) => r["_field"] == "StuckThreadCount")
   |> filter(fn: (r) => r["_measurement"] == "weblogic.ThreadPoolRuntime")
   |> group(columns: ["_field", "host", "_measurement"])

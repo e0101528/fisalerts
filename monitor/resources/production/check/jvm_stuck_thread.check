@@ -1,5 +1,5 @@
   - name: JVM Stuck Thread 
-    detail: the stuck thread count exceeds a threshold
+    detail: The stuck thread count exceeds a threshold
     fluxfile: flux/jvm_stuck_thread.flux
     severity: 1
     threshold: 0
@@ -9,5 +9,5 @@
       - _field
       - _measurement
       - wls_ServerRuntime
-    interval: 20
+    interval: 120
     target: postfix
