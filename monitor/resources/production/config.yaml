@@ -342,13 +342,13 @@ checks:
     detail: checks for minimum CPU Idle below a threshold
     fluxfile: flux/usage_idle.flux
     severity: 1
-    threshold: 10
-    comparison: le
+    threshold: 8
+    comparison: gt
     tags: 
       - host
       - _field
       - _measurement
-    interval: 20
+    interval: 600
     target: postfix
   - name: IOWait Max
     detail: Minimum IOWait has exceeded a 9.5% CPU threshold over 5 mins
