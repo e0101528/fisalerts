@@ -10,4 +10,4 @@
       - _measurement
       - wls_ServerRuntime
     interval: 120
-    target: postfix
+    target: xapi

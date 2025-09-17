@@ -10,4 +10,4 @@
       - _measurement
       - path
     interval: 900
-    target: postfix
+    target: xapi

@@ -9,4 +9,4 @@
       - _field
       - _measurement
     interval: 180
-    target: postfix
+    target: xapi

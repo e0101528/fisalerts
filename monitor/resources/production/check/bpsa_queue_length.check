@@ -10,4 +10,4 @@
       - _measurement
       - queue
     interval: 120
-    target: postfix
+    target: xapi

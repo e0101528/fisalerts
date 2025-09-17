@@ -112,7 +112,7 @@ checks:
       - port 
       - service
     interval: 300
-    target: postfix
+    target: xapi
   - name: BPSA Excessive Queue Length
     detail: The BPSA MQ Queue has more than 10000 outstanding messages exceeding the alert threshold
     fluxfile: flux/bpsa_queue_length.flux
@@ -125,7 +125,7 @@ checks:
       - _measurement
       - queue
     interval: 120
-    target: postfix
+    target: xapi
   - name: Cannot Submit CFG.USCMUserSync
     detail: The CFG.USCMUserSync job cannot be submitted. This is a user sync failure.
     calendar: OfficeHours
@@ -141,7 +141,7 @@ checks:
       - _field
       - _measurement
     interval: 300
-    target: postfix
+    target: xapi
   - name: Unusual Data Volume change
     detail: Looks for differences between daily data volume changes
     fluxfile: flux/data_volume_change.flux
@@ -154,7 +154,7 @@ checks:
       - _measurement
       - path
     interval: 3600
-    target: postfix
+    target: xapi
   - name: Feedhub Net Down
     detail: Feedhub is unreachable
     fluxfile: flux/feedhub_net_down.flux
@@ -170,7 +170,7 @@ checks:
       - port 
       - service
     interval: 300
-    target: postfix
+    target: xapi
   - name: Fundserv Net Down
     detail: The MQ endpoint at Fundserv on 142.148.10.116 port 1501 is unreachable
     fluxfile: flux/fundserv_net_down.flux
@@ -186,7 +186,7 @@ checks:
       - port
       - service
     interval: 300
-    target: postfix
+    target: xapi
   - name: HAProxy Backend Down
     detail: checks for a non-zero connection failure rate from HAProxy to backend servers.
     calendar: OfficeHours
@@ -201,7 +201,7 @@ checks:
       - proxy
       - sv
     interval: 120 
-    target: postfix
+    target: xapi
   - name: Intact IntactPollerEJBBean Error
     detail: The IntactPollerEJBBean has produced an ERROR level log alert
     fluxfile: flux/intact_bean_check.flux
@@ -213,7 +213,7 @@ checks:
       - _field
       - _measurement
     interval: 300
-    target: postfix
+    target: xapi
   - name: IRESS Net Down
     detail: IRESSS is unreachable
     fluxfile: flux/iress_net_down.flux
@@ -229,7 +229,7 @@ checks:
       - port 
       - service
     interval: 300
-    target: postfix
+    target: xapi
   - name: JVM Heap Usgage
     detail: The JVM Heap usage has exceeded the 95 percent threshold
     fluxfile: flux/jvm_heap_use.flux
@@ -241,7 +241,7 @@ checks:
       - _field
       - _measurement
     interval: 180
-    target: postfix
+    target: xapi
   - name: JVM Stuck Thread 
     detail: The stuck thread count exceeds a threshold
     fluxfile: flux/jvm_stuck_thread.flux
@@ -254,7 +254,7 @@ checks:
       - _measurement
       - wls_ServerRuntime
     interval: 120
-    target: postfix
+    target: xapi
   - name: MQ Channel Down - Fundserv
     detail: There is a status other than OK/Running on Fundserv MQ Channel
     fluxfile: flux/mqchan_fs_stat.flux
@@ -267,7 +267,7 @@ checks:
       - _field
       - _measurement
     interval: 300
-    target: postfix
+    target: xapi
   - name: MQ Channel Down - INTACT
     detail: There is a status other than OK/Running on INTACT MQ Channel
     calendar: OfficeHours
@@ -280,7 +280,7 @@ checks:
       - _field
       - _measurement
     interval: 300
-    target: postfix
+    target: xapi
   - name: MQ Channel Down - IRESS
     detail: There is a status other than OK/Running on IRESS MQ Channel
     calendar: OfficeHours
@@ -293,7 +293,7 @@ checks:
       - _field
       - _measurement
     interval: 300
-    target: postfix
+    target: xapi
   - name: No Job Control Record
     detail: checks for the presence of job control error messages
     fluxfile: flux/no_job_record.flux
@@ -305,7 +305,7 @@ checks:
       - _field
       - _measurement
     interval: 120
-    target: postfix
+    target: xapi
   - name: Path Service Not Available
     detail: The path service not available message is in the Admin Log. This indicates a serious Weblogic Issue. Singleton?
     calendar: OfficeHours
@@ -321,7 +321,7 @@ checks:
       - _field
       - _measurement
     interval: 300
-    target: postfix
+    target: xapi
   - name: Reuters Net Down
     detail: Reuters is unreachable
     fluxfile: flux/reuters_net_down.flux
@@ -337,7 +337,7 @@ checks:
       - port 
       - service
     interval: 300
-    target: postfix
+    target: xapi
   - name: Idle Min
     detail: Checks for minimum CPU Idle below a 5% threshold for 80% of metrics
     fluxfile: flux/usage_idle.flux
@@ -349,7 +349,7 @@ checks:
       - _field
       - _measurement
     interval: 600
-    target: postfix
+    target: xapi
   - name: IOWait Max
     detail: Minimum IOWait has exceeded a 25% CPU threshold for over 5 mins
     calendar: OfficeHours
@@ -362,7 +362,7 @@ checks:
       - _field
       - _measurement
     interval: 300
-    target: postfix
+    target: xapi
   - name: Volume Usage
     detail: Check for per mountpoint volume percent used threshold exceeds 80% 
     fluxfile: flux/volume_usage.flux
@@ -375,7 +375,7 @@ checks:
       - _measurement
       - path
     interval: 900
-    target: postfix
+    target: xapi
   - name: JMS Queue Usgage
     detail: The JMS queue length has exceeded 2000 outstanding messages
     fluxfile: flux/wl_jms_queue.flux
@@ -387,7 +387,7 @@ checks:
       - _field
       - _measurement
     interval: 120
-    target: postfix
+    target: xapi
   - name: Weblogic Socket Open Count
     detail: The socket count for weblogic has exceeded a threshold of 850
     fluxfile: flux/wl_open_sock.flux
@@ -399,4 +399,4 @@ checks:
       - _field
       - _measurement
     interval: 120
-    target: postfix
+    target: xapi
