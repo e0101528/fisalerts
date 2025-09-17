@@ -1,0 +1,12 @@
+  - name: Dummy Test Error
+    detail: Checks for the existence of a dummy file to veryfy alert targets are functioning IGNORE THIS ALERT
+    fluxfile: flux/dummy_error.flux
+    severity: 1
+    threshold: 0
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 60
+    target: xapi
