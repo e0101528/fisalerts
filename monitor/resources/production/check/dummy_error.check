@@ -1,4 +1,4 @@
-  - name: Dummy Test Error
+  - name: Dummy Test Error xMatters
     detail: Checks for the existence of a dummy file to veryfy alert targets are functioning IGNORE THIS ALERT
     fluxfile: flux/dummy_error.flux
     severity: 1
@@ -10,4 +10,17 @@
       - _measurement
     interval: 60
     target: xapi
-    action: Do nothing. This is a sythetic error to allow xMatters testing. 
+    action: Do nothing. This is a sythetic error to allow xMatters alert testing. 
+  - name: Dummy Test Error Postfix
+    detail: Checks for the existence of a dummy file to veryfy alert targets are functioning IGNORE THIS ALERT
+    fluxfile: flux/dummy_error.flux
+    severity: 1
+    threshold: 0
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 60
+    target: postfix
+    action: Do nothing. This is a sythetic error to allow postfix email alert testing. 
