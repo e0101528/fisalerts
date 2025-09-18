@@ -10,7 +10,7 @@
       - _field
       - _measurement
     interval: 300
-    target: xapi
+    target: postfix
     action: | 
               An extended period of extremely high CPU User time indicates unusal activity or a defective process. VM metrics 
               can be used to ascertain if there is a sudden and unusal spike in such activity. Login and use top to find

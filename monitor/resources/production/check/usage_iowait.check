@@ -10,11 +10,10 @@
       - _field
       - _measurement
     interval: 300
-    target: xapi
+    target: postfix
     action: | 
               An extended period of extremely high I/O during normal working hours indicates unusal activity, a defective process or
               a problem with underlying storage. The BPSA dashboard can indicate problems on the Netapp storage. VM metrics can be
               used to ascertain if there is a sudden and unusal spike in disk activity. Login and use iotop and iostat to find
               the process and storage volume affected. I/O wait may also occur on network connections. Check on the health
               of the database servers. Use the Azure portal to look for any events associated with the resource affected. 
-              
