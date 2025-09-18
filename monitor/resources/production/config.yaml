@@ -135,7 +135,8 @@ checks:
               or there is a significant problem with processing. Use the Azure Portal Dashboard for BPSA to compare incoming
               message rates with outgoing. Unless there is exception volume (RRSP season) it is most likely the loss of a WLS 
               or a problem with database performnce. Ensure the WLS managed servers are healthy and engage a DBA to look at 
-              Oracle stats.  - name: Cannot Submit CFG.USCMUserSync
+              Oracle stats.
+  - name: Cannot Submit CFG.USCMUserSync
     detail: The CFG.USCMUserSync job cannot be submitted. This is a user sync failure.
     calendar: OfficeHours
     fluxfile: flux/cannot_submit.flux
@@ -153,7 +154,8 @@ checks:
     target: xapi
     action: | 
               A user sync failure has occurred in the job that synchronizes users betweemn USCM and Config. This may require a 
-              rolling restart of Weblogic managed servers.   - name: Unusual Data Volume change
+              rolling restart of Weblogic managed servers. 
+  - name: Unusual Data Volume change
     detail: Looks for differences between daily data volume changes
     fluxfile: flux/data_volume_change.flux
     severity: 1
@@ -171,6 +173,7 @@ checks:
               there is a problem with a process, an unusually large file creation or human error. Inpect the server and 
               volume manually to see what has changed dramatically in the last 24h. For example, use a "find -mtime -1" and look
               for any suspiciously large files. This is not criital. 
+
   - name: Dummy Test Error
     detail: Checks for the existence of a dummy file to veryfy alert targets are functioning IGNORE THIS ALERT
     fluxfile: flux/dummy_error.flux
@@ -203,7 +206,8 @@ checks:
     action: | 
               This indicates that Feedhub is not reachable from one or more servers. This may be a temporary disruption of traffic. 
               Log into the affected VM and manually test connectivity. An extended failure to connect or repeated alerts should be
-              escalated to Azure Network Support and/or the client.   - name: Fundserv Net Down
+              escalated to Azure Network Support and/or the client. 
+  - name: Fundserv Net Down
     detail: The MQ endpoint at Fundserv on 142.148.10.116 port 1501 is unreachable
     fluxfile: flux/fundserv_net_down.flux
     severity: 1
@@ -223,7 +227,8 @@ checks:
               This alert indicates that several attempts to connect by TCP to the endpoint in the details failed. This may be a
               temporary problem but connectivity should be verified manually. Extended outages should be escalated to Azure
               Network Support and/or the client. This alert may be accompanied by MQ alerts. An extended outage may require
-              MQ channels to be restarted.  - name: HAProxy Backend Down
+              MQ channels to be restarted.
+  - name: HAProxy Backend Down
     detail: checks for a non-zero connection failure rate from HAProxy to backend servers.
     calendar: OfficeHours
     fluxfile: flux/haproxy_downtime_rate.flux
@@ -243,7 +248,8 @@ checks:
               Connect to any affected Weblogic server and Weblogic console. Manually check that the applications are up and look at 
               logs for any errors that would indicate that one or more products are non-operational.  
               Look for excessive load on Azure Portal dashboards (CPU). This alert may be sent during simple high load but 
-              most llkely a WLS Node has a fault and will need to be restarted.  - name: Intact IntactPollerEJBBean Error
+              most llkely a WLS Node has a fault and will need to be restarted.
+  - name: Intact IntactPollerEJBBean Error
     detail: The IntactPollerEJBBean has produced an ERROR level log alert
     fluxfile: flux/intact_bean_check.flux
     severity: 1
@@ -256,7 +262,8 @@ checks:
     interval: 300
     target: xapi
     action: | 
-              Call Mr. Azzopardi.  - name: IRESS Net Down
+              Call Mr. Azzopardi.
+  - name: IRESS Net Down
     detail: IRESSS is unreachable
     fluxfile: flux/iress_net_down.flux
     severity: 1
@@ -276,7 +283,8 @@ checks:
               This alert indicates that several attempts to connect by TCP to the endpoint in the details failed. This may be a
               temporary problem but connectivity should be verified manually. Extended outages should be escalated to Azure
               Network Support and/or the client. This alert may be accompanied by MQ alerts. An extended outage may require
-              MQ channels to be restarted.  - name: JVM Heap Usgage
+              MQ channels to be restarted.
+  - name: JVM Heap Usgage
     detail: The JVM Heap usage has exceeded the 95 percent threshold
     fluxfile: flux/jvm_heap_use.flux
     severity: 1
@@ -290,7 +298,8 @@ checks:
     target: xapi
     action: | 
               This alert indicates that the affected WLS Managed Server is suffering some kind of memory leak. 
-              The managed server will most likely need to be restarted.   - name: JVM Stuck Thread 
+              The managed server will most likely need to be restarted. 
+  - name: JVM Stuck Thread 
     detail: The stuck thread count exceeds a threshold
     fluxfile: flux/jvm_stuck_thread.flux
     severity: 1
@@ -305,7 +314,8 @@ checks:
     target: xapi
     action: | 
               This alert indicates that the affected WLS Managed Server is suffering from a locking issue, possible deadlock. 
-              The managed server will most likely need to be restarted.   - name: MQ Channel Down - Fundserv
+              The managed server will most likely need to be restarted. 
+  - name: MQ Channel Down - Fundserv
     detail: There is a status other than OK/Running on Fundserv MQ Channel
     fluxfile: flux/mqchan_fs_stat.flux
     severity: 1
@@ -321,7 +331,8 @@ checks:
     action: | 
               Log in to the MQ server and check the channel status. Verify that the remote MQ server is reachable on the MQ port.
               Attempt to reset any unhealthy channel(s). User netstat (or ss) to check for any connections in an unusual state.
-              If there is an underlying network problem escalate to Azure Network Support and the client.  - name: MQ Channel Down - INTACT
+              If there is an underlying network problem escalate to Azure Network Support and the client.
+  - name: MQ Channel Down - INTACT
     detail: There is a status other than OK/Running on INTACT MQ Channel
     calendar: OfficeHours
     fluxfile: flux/mqchan_int_stat.flux
@@ -337,7 +348,8 @@ checks:
     action: | 
               Log in to the MQ server and check the channel status. Verify that the remote MQ server is reachable on the MQ port.
               Attempt to reset any unhealthy channel(s). User netstat (or ss) to check for any connections in an unusual state.
-              If there is an underlying network problem escalate to Azure Network Support and the client.  - name: MQ Channel Down - IRESS
+              If there is an underlying network problem escalate to Azure Network Support and the client.
+  - name: MQ Channel Down - IRESS
     detail: There is a status other than OK/Running on IRESS MQ Channel
     calendar: OfficeHours
     fluxfile: flux/mqchan_iress_stat.flux
@@ -353,7 +365,8 @@ checks:
     action: | 
               Log in to the MQ server and check the channel status. Verify that the remote MQ server is reachable on the MQ port.
               Attempt to reset any unhealthy channel(s). User netstat (or ss) to check for any connections in an unusual state.
-              If there is an underlying network problem escalate to Azure Network Support and the client.  - name: No Job Control Record
+              If there is an underlying network problem escalate to Azure Network Support and the client.
+  - name: No Job Control Record
     detail: checks for the presence of job control error messages
     fluxfile: flux/no_job_record.flux
     severity: 1
@@ -365,6 +378,8 @@ checks:
       - _measurement
     interval: 120
     target: xapi
+    action: |
+              Call Mr. Azzopardi. 
   - name: Path Service Not Available
     detail: The path service not available message is in the Admin Log. This indicates a serious Weblogic Issue. 
     calendar: OfficeHours
@@ -384,7 +399,8 @@ checks:
     action: | 
               There is a serious problem with the Weblogic cluster. 
               Log in to the WLS server and the Weblogic console. Check the health of the services and singleton. 
-              Escalate. This will most likely require a rolling restart of the Weblogic cluster.   - name: Reuters Net Down
+              Escalate. This will most likely require a rolling restart of the Weblogic cluster. 
+  - name: Reuters Net Down
     detail: Reuters is unreachable
     fluxfile: flux/reuters_net_down.flux
     severity: 1
@@ -404,7 +420,8 @@ checks:
               This alert indicates that several attempts to connect by TCP to the endpoint in the details failed. This may be a
               temporary problem but connectivity should be verified manually. Extended outages should be escalated to Azure
               Network Support and/or the client. Reuters is reached through the CIBC network and may indicate a more serious loss 
-              of connectivity.   - name: Idle Min
+              of connectivity. 
+  - name: Idle Min
     detail: Checks for minimum CPU Idle below a 5% threshold for 80% of metrics
     fluxfile: flux/usage_idle.flux
     severity: 1
@@ -419,7 +436,8 @@ checks:
     action: | 
               This alert indicates and unusual and extended period during which the affected VM saw very low CPU Idle time. 
               It does not indicate the CPU activity, only unusual load. Use Influx/Grafana dashboards or Azure metrics to 
-              investigate the type of CPU usage and log into the VM to look for top or iotop processes that may be malfunctioning.   - name: IOWait Max
+              investigate the type of CPU usage and log into the VM to look for top or iotop processes that may be malfunctioning. 
+  - name: IOWait Max
     detail: Minimum IOWait has exceeded a 25% CPU threshold for over 5 mins
     calendar: OfficeHours
     fluxfile: flux/usage_iowait.flux
@@ -455,7 +473,8 @@ checks:
               An extended period of extremely high CPU User time indicates unusal activity or a defective process. VM metrics 
               can be used to ascertain if there is a sudden and unusal spike in such activity. Login and use top to find
               the process causing the spike. If Weblogic or Oracle DB are implicated, there may be underlying hardware or
-              configuration issues. Look at historical activity for patterns. Escalate.   - name: Volume Usage
+              configuration issues. Look at historical activity for patterns. Escalate. 
+  - name: Volume Usage
     detail: Check for per mountpoint volume percent used threshold exceeds 80% 
     fluxfile: flux/volume_usage.flux
     severity: 1
@@ -469,7 +488,8 @@ checks:
     interval: 900
     target: xapi
     action: | 
-              Login and attempt to clean up the volume. If this is a system volume, escalate to a user with root access.   - name: JMS Queue Usgage
+              Login and attempt to clean up the volume. If this is a system volume, escalate to a user with root access. 
+  - name: JMS Queue Usgage
     detail: The JMS queue length has exceeded 2000 outstanding messages
     fluxfile: flux/wl_jms_queue.flux
     severity: 1
