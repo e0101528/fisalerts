@@ -9,11 +9,12 @@ influxdb:
   serverurl: http://cibccaprodadm2.na1.prod.azure:8086
   org: FIS
   authtoken: CKjDnii7XrgokGyr3wovRrxKTdXfLY3LvEBOI3OMDzB_qHoMPpvlFlqRnwRVOkpx-FQEo7ZUrT-xDMaEFOuMTQ==
-go-server:
+go_server:
   host: localhost
-  port: 9911
-  rootdir: /alert
+  port: 8000
+  rootdir: /monitor
   request_timeout_secs: 30
+  templatefile: check.tmpl
 calendars:
   AllHours:
       name: Twenty Four By Seven

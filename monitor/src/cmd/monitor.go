@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"monitor/internal/config"
+	"monitor/internal/services/servlet"
 	"monitor/internal/services/taskrunner"
 	"monitor/internal/services/workcalendar"
 
@@ -44,6 +45,10 @@ func main() {
 			return err
 		})
 	}
+	g.Go(func() error {
+		err := servlet.Server(ctx, &cfg)
+		return err
+	})
 	if err := g.Wait(); err != nil {
 		log.Fatal(err)
 	}

@@ -22,7 +22,7 @@ func LoadAppConfig() (appConfig ApplicationConfig, err error) {
 	if err != nil {
 		return
 	}
-
+	appConfig.ConfigDir = commandLineOptions.ConfigDir
 	err = yaml.Unmarshal(fileBytes, &appConfig)
 	if err != nil {
 		return

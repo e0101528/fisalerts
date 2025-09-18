@@ -1,6 +1,6 @@
 {
 "status": "{{ .Fields.status }}",
-"externalURL": "https://{{ .Fields.ipaddr }}/orgs/{{ .Fields.org }}/alerting/checks/{{ .Fields._check_id }}/edit",
+"externalURL": "http://localhost:8000/alert/?checkid={{ .Fields._check_id }}",
   "alerts": [
     {
       "generatorURL": "https://{{ .Fields.self }}.na1.prod.azure:8086",

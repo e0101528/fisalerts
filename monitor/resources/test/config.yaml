@@ -9,11 +9,12 @@ influxdb:
   serverurl: http://localhost:8086
   org: Home 
   authtoken: EeGzcgUGCbcU8R_PrQUJ1w71hN50u1AJhA0HUoJ2egO_9BKfMLECaTZ_Zj83DrUqVLb3qKvvjK15z7ubuaQVHA==
-go-server:
+go_server:
   host: localhost
-  port: 9911
-  rootdir: /alert
+  port: 8000
+  root_dir: "/alert/"
   request_timeout_secs: 30
+  templatefile: check.tmpl
 calendars:
   OfficeHours:
       name: Office Hours
@@ -58,6 +59,7 @@ checks:
       - _measurement
     interval: 15
     target: logonly
+    action: Check Influx or Grafana to identify extended period of diskio. Use iostat on the VM to identify the target. Use iotop to identify the culprit.
   - name: Idle Min
     detail: checks for minimum CPU Idle below a threshold
     fluxfile: usage_idle.flux
@@ -70,6 +72,7 @@ checks:
       - _measurement
     interval: 20
     target: logonly
+    action: Check current and historic server loads with Influx/Grafana. If the load is continuing and anomalous then log in and find the top CPU hog.
   - name: System Uptime
     detail: checks for minimum CPU Idle below a threshold
   #  calendar: Lazy
@@ -83,6 +86,7 @@ checks:
       - _measurement
     interval: 10
     target: logonly
+    action: Do nothing. It's all about being laxy.
 targets: 
   postfix:
     method: postfix

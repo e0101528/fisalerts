@@ -19,6 +19,7 @@ type WebServerConfig struct {
 	Port               int    `yaml:"port"`
 	RootDir            string `yaml:"root_dir"`
 	RequestTimeoutSecs int    `yaml:"request_timeout_secs"`
+	TemplateFile       string `yaml:"templatefile"`
 	TLSCertFilepath    string `yaml:"tls_cert_filepath"`
 	TLSKeyFilepath     string `yaml:"tls_key_filepath"`
 }
@@ -39,6 +40,7 @@ type Check struct {
 	Interval   int      `yaml:"interval"`
 	Target     string   `yaml:"target"`
 	ID         string   `yaml:"id"` //overwritten by checksum of flux
+	Action     string   `yaml:"action"`
 }
 
 type Target struct {
@@ -73,6 +75,7 @@ type ApplicationConfig struct {
 	IPAddr          string         `yaml:"ipaddr"`
 	InfluxDB        InfluxDBConfig `yaml:"influxdb"`
 	MaintenanceMode bool
+	ConfigDir       string
 }
 
 type Metric struct {

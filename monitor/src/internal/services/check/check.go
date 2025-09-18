@@ -7,6 +7,7 @@ import (
 	infl "monitor/internal/repositories/influxdb"
 	"monitor/internal/services/notifier"
 	"monitor/internal/utils"
+	"os"
 	"time"
 
 	"strings"
@@ -84,7 +85,7 @@ func RtoC(cfg *config.ApplicationConfig, r map[string]interface{}, c config.Chec
 		}
 	}
 
-	content.Fields["self"] = cfg.Webserver.Host
+	content.Fields["self"], _ = os.Hostname()
 	content.Fields["status"] = "firing"
 	content.Fields["severity"] = fmt.Sprintf("SEV-%d", c.Severity)
 	content.Fields["_level"] = levels[c.Severity]

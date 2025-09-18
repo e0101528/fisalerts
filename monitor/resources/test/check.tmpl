@@ -1,0 +1,90 @@
+<style>
+		body {
+			margin: 0 auto;
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+			font-size: 1rem;
+			font-weight: 400;
+			line-height: 1.5;
+			color: #212529;
+			text-align: left;
+			background-color: #fff;
+			padding: 20px;
+		}
+
+		hr {
+			box-sizing: content-box;
+			height: 0;
+			overflow: visible;
+			margin-top: 1rem;
+			margin-bottom: 1rem;
+			border: 0;
+			border-top: 1px solid rgba(0, 0, 0, 0.1);
+		}
+
+		table {
+			border-collapse: collapse;
+			border-spacing: 0;
+			empty-cells: show;
+			border: 1px solid #cbcbcb;
+		}
+
+		table td,
+		table th {
+			border-left: 1px solid #cbcbcb;
+			border-width: 0 0 0 1px;
+			font-size: inherit;
+			margin: 0;
+			overflow: visible;
+			padding: 6px 12px;
+		}
+
+		table td:first-child,
+		table th:first-child {
+			border-left-width: 0;
+		}
+
+		table thead {
+			background: #e0e0e0;
+			color: #000;
+			text-align: left;
+			vertical-align: bottom;
+		}
+
+		table td {
+			background-color: transparent;
+			border-bottom: 1px solid #cbcbcb;
+		}
+
+		table tr:nth-child(2n) td {
+			background-color: #f2f2f2;
+		}
+		table tbody > tr:last-child td{
+			border-bottom-width: 0;
+		}
+	</style>
+<h1>{{.Name}}</h1>
+<table>
+<tbody>
+<tr><td>Name</td><td>{{ .Name }}</td></tr>
+<tr><td>Detail</td><td>{{ .Detail }}</td></tr>
+<tr><td>Calendar</td><td>{{ .Calendar }}</td></tr>
+<tr><td>FluxFile</td><td>{{ .FluxFile }}</td></tr>
+<tr><td>Flux</td><td>{{ .Flux }}</td></tr>
+<tr><td>Severity</td><td>{{ .Severity }}</td></tr>
+<tr><td>Threshold</td><td>{{ .Threshold }}</td></tr>
+<tr><td>Comparison</td><td>{{ .Comparison }}</td></tr>
+<tr><td>Match</td><td>{{ .Match }}</td></tr>
+<tr><td>Interval</td><td>{{ .Interval }}</td></tr>
+<tr><td>Target</td><td>{{ .Target }}</td></tr>
+<tr><td>ID</td><td>{{ .ID }}</td></tr>
+<tr><td>Tags</td><td>
+<table>
+
+    {{range $k,$v := .Tags}}
+        <tr><td>{{ $v }}</td></tr>{{ end }}
+</table>
+</td></tr>
+<tr><td>Recommended Actions</td><td>{{ .Action }}</td></tr>
+
+</tbody>
+</table>
