@@ -10,3 +10,5 @@
       - _measurement
     interval: 300
     target: xapi
+    action: | 
+              Call Mr. Azzopardi.

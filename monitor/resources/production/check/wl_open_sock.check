@@ -10,3 +10,9 @@
       - _measurement
     interval: 120
     target: xapi
+    action: | 
+              High open socket counts can indicate a defective weblogic server. It may also indicate unusual and protential serious
+              activity. Look at haproxy stats for new connections. If that is unusally high, attempt to collect source IP addresses.
+              If the incoming load seems normal, then the high count indicates that weblogic is unable to service the connections
+              fast enough. If this occurs on a single weblogic node, then it may need to be restarted. If more than one node
+              is affected then a cluster-wide issue is present. That may be persistent storage, network or database. 

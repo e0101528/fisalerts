@@ -11,3 +11,7 @@
       - _measurement
     interval: 300
     target: xapi
+    action: | 
+              Log in to the MQ server and check the channel status. Verify that the remote MQ server is reachable on the MQ port.
+              Attempt to reset any unhealthy channel(s). User netstat (or ss) to check for any connections in an unusual state.
+              If there is an underlying network problem escalate to Azure Network Support and the client.

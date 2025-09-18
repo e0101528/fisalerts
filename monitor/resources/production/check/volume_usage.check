@@ -11,3 +11,5 @@
       - path
     interval: 900
     target: xapi
+    action: | 
+              Login and attempt to clean up the volume. If this is a system volume, escalate to a user with root access. 

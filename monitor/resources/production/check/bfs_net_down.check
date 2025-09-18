@@ -14,3 +14,6 @@
       - service
     interval: 300
     target: xapi
+    action: | 
+              Although BFS occassionally flaps, any extended outage may prevent file transfers and MQ messaging.
+              Login to manually verify that network is recovered. If not open and incident for Azure Network Support

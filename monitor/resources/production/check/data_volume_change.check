@@ -10,4 +10,9 @@
       - _measurement
       - path
     interval: 3600
-    target: xapi
+    target: postfix
+    action: |
+              There is a significant difference in the change of data volumes from on day to the next. This may indicate that 
+              there is a problem with a process, an unusually large file creation or human error. Inpect the server and 
+              volume manually to see what has changed dramatically in the last 24h. For example, use a "find -mtime -1" and look
+              for any suspiciously large files. This is not criital. 

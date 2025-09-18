@@ -10,3 +10,7 @@
       - _measurement
     interval: 600
     target: xapi
+    action: | 
+              This alert indicates and unusual and extended period during which the affected VM saw very low CPU Idle time. 
+              It does not indicate the CPU activity, only unusual load. Use Influx/Grafana dashboards or Azure metrics to 
+              investigate the type of CPU usage and log into the VM to look for top or iotop processes that may be malfunctioning. 

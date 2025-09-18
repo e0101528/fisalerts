@@ -10,3 +10,4 @@
       - _measurement
     interval: 60
     target: xapi
+    action: Do nothing. This is a sythetic error to allow xMatters testing. 

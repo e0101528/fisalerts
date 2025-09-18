@@ -11,12 +11,6 @@
 			padding: 20px;
 		}
 
-        pre {
-			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-			font-size: 1rem;
-			font-weight: 400;
-        }
-
 		hr {
 			box-sizing: content-box;
 			height: 0;
@@ -75,7 +69,7 @@
 <tr><td>Detail</td><td>{{ .Detail }}</td></tr>
 <tr><td>Calendar</td><td>{{ .Calendar }}</td></tr>
 <tr><td>FluxFile</td><td>{{ .FluxFile }}</td></tr>
-<tr><td>Flux</td><td><pre>{{ .Flux }}</pre></td></tr>
+<tr><td>Flux</td><td>{{ .Flux }}</td></tr>
 <tr><td>Severity</td><td>{{ .Severity }}</td></tr>
 <tr><td>Threshold</td><td>{{ .Threshold }}</td></tr>
 <tr><td>Comparison</td><td>{{ .Comparison }}</td></tr>
@@ -90,7 +84,7 @@
         <tr><td>{{ $v }}</td></tr>{{ end }}
 </table>
 </td></tr>
-<tr><td>Recommended Actions</td><td><pre>{{ .Action }}</pre></td></tr>
+<tr><td>Recommended Actions</td><td>{{ .Action }}</td></tr>
 
 </tbody>
 </table>

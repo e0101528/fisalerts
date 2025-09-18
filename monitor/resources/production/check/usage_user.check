@@ -1,0 +1,18 @@
+  - name: CPU User Max
+    detail: Mean User time has exceeded a 95% CPU threshold for over 5 mins
+    calendar: OfficeHours
+    fluxfile: flux/usage_user.flux
+    severity: 1
+    threshold: 95 
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 300
+    target: xapi
+    action: | 
+              An extended period of extremely high CPU User time indicates unusal activity or a defective process. VM metrics 
+              can be used to ascertain if there is a sudden and unusal spike in such activity. Login and use top to find
+              the process causing the spike. If Weblogic or Oracle DB are implicated, there may be underlying hardware or
+              configuration issues. Look at historical activity for patterns. Escalate. 

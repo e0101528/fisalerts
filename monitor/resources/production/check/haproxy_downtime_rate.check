@@ -13,3 +13,9 @@
       - sv
     interval: 120 
     target: xapi
+    action: | 
+              This alert indicates that the load-balancer cannot establish a connection to the backends on WLS servers. 
+              Connect to any affected Weblogic server and Weblogic console. Manually check that the applications are up and look at 
+              logs for any errors that would indicate that one or more products are non-operational.  
+              Look for excessive load on Azure Portal dashboards (CPU). This alert may be sent during simple high load but 
+              most llkely a WLS Node has a fault and will need to be restarted.

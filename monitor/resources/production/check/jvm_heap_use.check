@@ -10,3 +10,6 @@
       - _measurement
     interval: 180
     target: xapi
+    action: | 
+              This alert indicates that the affected WLS Managed Server is suffering some kind of memory leak. 
+              The managed server will most likely need to be restarted. 

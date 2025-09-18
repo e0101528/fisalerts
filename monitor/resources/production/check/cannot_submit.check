@@ -14,3 +14,6 @@
       - _measurement
     interval: 300
     target: xapi
+    action: | 
+              A user sync failure has occurred in the job that synchronizes users betweemn USCM and Config. This may require a 
+              rolling restart of Weblogic managed servers. 

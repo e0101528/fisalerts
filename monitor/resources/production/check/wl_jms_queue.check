@@ -10,3 +10,10 @@
       - _measurement
     interval: 120
     target: xapi
+    action: | 
+              Unusual JMS queue length may indicate unusual volume or a more serious, unerlying performance problem. 
+              If messages are accumulating escalate immediately. If messages are flowing but with a large but stable backlog
+              there is more time for diagnostics. The issue may resolve itself when incoming volume declines. However you should
+              use Azure Dashboards and Influx/Grafana to attempt to find any historically unusual load. Since the processing
+              depends upon webogic, persistent storage, database and network, collecting diagnostics during an event can assist
+              with later analysis. Check weblogic logs for errors.

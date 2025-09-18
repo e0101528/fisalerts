@@ -1,5 +1,5 @@
   - name: Path Service Not Available
-    detail: The path service not available message is in the Admin Log. This indicates a serious Weblogic Issue. Singleton?
+    detail: The path service not available message is in the Admin Log. This indicates a serious Weblogic Issue. 
     calendar: OfficeHours
     fluxfile: flux/path_unavailable.flux
     severity: 1
@@ -14,3 +14,7 @@
       - _measurement
     interval: 300
     target: xapi
+    action: | 
+              There is a serious problem with the Weblogic cluster. 
+              Log in to the WLS server and the Weblogic console. Check the health of the services and singleton. 
+              Escalate. This will most likely require a rolling restart of the Weblogic cluster. 

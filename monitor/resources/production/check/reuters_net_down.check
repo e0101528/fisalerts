@@ -14,3 +14,8 @@
       - service
     interval: 300
     target: xapi
+    action: | 
+              This alert indicates that several attempts to connect by TCP to the endpoint in the details failed. This may be a
+              temporary problem but connectivity should be verified manually. Extended outages should be escalated to Azure
+              Network Support and/or the client. Reuters is reached through the CIBC network and may indicate a more serious loss 
+              of connectivity. 

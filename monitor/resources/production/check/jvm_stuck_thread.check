@@ -11,3 +11,6 @@
       - wls_ServerRuntime
     interval: 120
     target: xapi
+    action: | 
+              This alert indicates that the affected WLS Managed Server is suffering from a locking issue, possible deadlock. 
+              The managed server will most likely need to be restarted. 

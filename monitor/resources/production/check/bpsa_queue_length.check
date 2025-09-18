@@ -11,3 +11,9 @@
       - queue
     interval: 120
     target: xapi
+    action: | 
+              A large number of outstanding messages indicates that either the number of incoming messages is exceptionally large
+              or there is a significant problem with processing. Use the Azure Portal Dashboard for BPSA to compare incoming
+              message rates with outgoing. Unless there is exception volume (RRSP season) it is most likely the loss of a WLS 
+              or a problem with database performnce. Ensure the WLS managed servers are healthy and engage a DBA to look at 
+              Oracle stats.
