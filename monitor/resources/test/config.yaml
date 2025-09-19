@@ -77,8 +77,27 @@ checks:
               Login to manually verify that network is recovered. If not open and incident for Azure Network Support
   - name: System Uptime
     detail: checks for minimum CPU Idle below a threshold
-  #  calendar: Lazy
+    calendar: Lazy
     fluxfile: uptime_format.flux
+    severity: 1
+    match: 34 day
+    comparison: substr
+    tags: 
+      - host
+      - _field
+      - _measurement
+    interval: 10
+    target: postfix
+    action: Do nothing. It's all about being laxy.
+  - name: System Stuff
+    detail: checks for minimum CPU Idle below a threshold
+  #  calendar: Lazy
+    flux: | 
+              from(bucket: "telegraf")
+              |> range (start: -1m) 
+              |> filter (fn: (r) => r["_measurement"] == "system" ) 
+              |> filter (fn: (r) => r["_field"] == "uptime_format" ) 
+              |> last()
     severity: 1
     match: 33 day
     comparison: substr

@@ -39,10 +39,11 @@ func LoadAppConfig() (appConfig ApplicationConfig, err error) {
 				utils.Error("Flux file read error for %s\n", appConfig.Checks[i].FluxFile)
 			} else {
 				appConfig.Checks[i].Flux = string(fileBytes)
-				appConfig.Checks[i].ID = fmt.Sprintf("%x", sha256.Sum256(fileBytes))
+
 			}
 
 		}
+		appConfig.Checks[i].ID = fmt.Sprintf("%x", sha256.Sum256([]byte(appConfig.Checks[i].Name+" # "+appConfig.Checks[i].Flux)))
 	}
 
 	appConfig.Storage, err = repositories.InitBolt()
