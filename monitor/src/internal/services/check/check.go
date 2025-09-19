@@ -32,7 +32,8 @@ func Run(ctx context.Context, c config.Check) {
 	utils.Dump("Check", c)
 	nfy, ok := nfys[c.Target]
 	if !ok {
-		utils.Warn("Unknown notification target: %s\n", c.Target)
+		utils.Warn("Unknown notification target: '%s'\n", c.Target)
+		utils.Dump("Notifiers", nfys)
 	}
 	utils.Info("Got %d results\n", len(res))
 	utils.Dump("Results", res)

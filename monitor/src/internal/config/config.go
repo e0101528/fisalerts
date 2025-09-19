@@ -66,6 +66,7 @@ func LoadAppConfig() (appConfig ApplicationConfig, err error) {
 					Template:     tmpl,
 					SrcEmail:     t.SrcEmail,
 					DstEmail:     t.DstEmail,
+					Subject:      t.Topic,
 				}
 			case "xapi":
 				appConfig.Notifiers[i] = &notifier.XAPI{

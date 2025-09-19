@@ -90,6 +90,7 @@ targets:
     templatefile: email.tmpl
     srcemail: stephen.trigg@fisglobal.com
     dstemail: fis.wm-azure.admins@fisglobal.com
+    topic: CIBC Production Monitoring Alert
   xapi:
     method: xapi
     templatefile: gx.tmpl

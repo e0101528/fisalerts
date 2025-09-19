@@ -50,6 +50,7 @@ type Target struct {
 	TargetURL    string `yaml:"targeturl"`
 	SrcEmail     string `yaml:"srcemail"`
 	DstEmail     string `yaml:"dstemail"`
+	Topic        string `yaml:"topic"`
 }
 
 type InfluxDBConfig struct {

@@ -14,6 +14,7 @@ type Postfix struct {
 	Template     *template.Template
 	SrcEmail     string
 	DstEmail     string
+	Subject      string
 }
 
 func (x *Postfix) SendAlert(content Content) {
@@ -30,14 +31,14 @@ func (x *Postfix) SendAlert(content Content) {
 	src := x.GetSrcEmail()
 	dst := x.GetDstEmail()
 
-	cmd := exec.Command("/usr/bin/mailx", "-s", "Dummy", "-r", src, dst)
+	cmd := exec.Command("/usr/bin/mailx", "-s", x.Subject, "-r", src, dst)
 	// cmd := exec.Command("cat")
 	stdin, err := cmd.StdinPipe()
 	if err != nil {
 		utils.Error("postfix sednalert error: %v", err)
 		return
 	}
-	utils.Debug("%s %s %s %s %s %s\n", "mailx", "-s", "'I am a Dummy'", "-r", src, dst)
+	utils.Debug("Alert with mail command: %s %s '%s' %s %s %s\n", "mailx", "-s", x.Subject, "-r", src, dst)
 	go func() {
 		defer stdin.Close()
 		io.WriteString(stdin, buf.String())

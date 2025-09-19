@@ -80,21 +80,22 @@ checks:
   #  calendar: Lazy
     fluxfile: uptime_format.flux
     severity: 1
-    match: 1 day
+    match: 33 day
     comparison: substr
     tags: 
       - host
       - _field
       - _measurement
     interval: 10
-    target: logonly
+    target: postfix
     action: Do nothing. It's all about being laxy.
 targets: 
   postfix:
     method: postfix
     templatefile: email.tmpl
-    srcemail: stephen.trigg@fisglobal.com
-    dstemail: fis.wm-azure.admins@fisglobal.com
+    srcemail: triggs@localhost
+    dstemail: triggs@localhost
+    topic: CIBC Production Monitoring Alert
   xapi:
     method: xapi
     templatefile: gx.tmpl
@@ -102,3 +103,4 @@ targets:
   logonly:
     method: logger
     templatefile: gx.tmpl
+
