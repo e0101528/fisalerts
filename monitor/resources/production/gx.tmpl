@@ -19,7 +19,7 @@
         "summary": "A {{ .Fields._check_name }} [{{ .Fields._level }}] alert for {{ .Fields.host }} fired at {{ .Fields._time }}"
       },
       "labels": {
-{{ range   .Labels }}
+{{ range $k,$v := .Labels }}
         "{{ $k }}": "{{ $v }}",{{ end }}
         "alertname": "{{ .Fields._check_name }}"
       },
@@ -34,6 +34,8 @@
 "appGroupEmail": "{{ .Fields.appGroupEmail }}",
 "environment": "{{ .Fields.environment }}",
 "assignmentGroup": "{{ .Fields.assignmentGroup }}",
+{{ range $k,$v := .Labels }}
+        "{{ $k }}": "{{ $v }}",{{ end }}
 "origin": "{{ .Fields.host }}"
 }
 
