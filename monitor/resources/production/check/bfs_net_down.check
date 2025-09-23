@@ -16,4 +16,5 @@
     target: xapi
     action: | 
               Although BFS occassionally flaps, any extended outage may prevent file transfers and MQ messaging.
-              Login to manually verify that network is recovered. If not open and incident for Azure Network Support
+              Login to manually verify that network is recovered. If not open and incident for Azure Network Support.
+              The service tested is TCP port 1364 on 149.83.1.11

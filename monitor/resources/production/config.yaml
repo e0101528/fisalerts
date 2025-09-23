@@ -117,7 +117,8 @@ checks:
     target: xapi
     action: | 
               Although BFS occassionally flaps, any extended outage may prevent file transfers and MQ messaging.
-              Login to manually verify that network is recovered. If not open and incident for Azure Network Support
+              Login to manually verify that network is recovered. If not open and incident for Azure Network Support.
+              The service tested is TCP port 1364 on 149.83.1.11
   - name: BPSA Excessive Queue Length
     detail: The BPSA MQ Queue has more than 10000 outstanding messages exceeding the alert threshold
     fluxfile: flux/bpsa_queue_length.flux
@@ -220,10 +221,11 @@ checks:
     action: | 
               This indicates that Feedhub is not reachable from one or more servers. This may be a temporary disruption of traffic. 
               Log into the affected VM and manually test connectivity. An extended failure to connect or repeated alerts should be
-              escalated to Azure Network Support and/or the client. 
+              escalated to Azure Network Support and/or the client. Feedhub uses port 22 on IP adresses: 168.108.161.83 (MCC) and
+              168.108.225.214 (SCC)
   - name: Fundserv Net Down
     detail: The MQ endpoint at Fundserv on 142.148.10.116 port 1501 is unreachable
-    fluxfile: flux/fundserv_net_down.flux
+    fluxfile: flux/fundserv_mq_net_down.flux
     severity: 1
     threshold: 1
     calendar: Fundserv
@@ -241,7 +243,27 @@ checks:
               This alert indicates that several attempts to connect by TCP to the endpoint in the details failed. This may be a
               temporary problem but connectivity should be verified manually. Extended outages should be escalated to Azure
               Network Support and/or the client. This alert may be accompanied by MQ alerts. An extended outage may require
-              MQ channels to be restarted.
+              MQ channels to be restarted. Verify manually 142.148.10.116 port 1501 is reachable.
+  - name: Fundserv Net Down
+    detail: The MQ endpoint at Fundserv on 142.148.10.120 port 2222 is unreachable
+    fluxfile: flux/fundserv_net_down.flux
+    severity: 1
+    threshold: 1
+    calendar: Fundserv
+    comparison: gt
+    tags: 
+      - host
+      - _field
+      - _measurement
+      - server
+      - port
+      - service
+    interval: 300
+    target: xapi
+    action: | 
+              This alert indicates that several attempts to connect by TCP to the endpoint in the details failed. This may be a
+              temporary problem but connectivity should be verified manually. Extended outages should be escalated to Azure
+              Network Support and/or the client. Verify manually 142.148.10.120 port 2222 is reachable.
   - name: HAProxy Backend Down
     detail: checks for a non-zero connection failure rate from HAProxy to backend servers.
     calendar: OfficeHours
@@ -297,7 +319,7 @@ checks:
               This alert indicates that several attempts to connect by TCP to the endpoint in the details failed. This may be a
               temporary problem but connectivity should be verified manually. Extended outages should be escalated to Azure
               Network Support and/or the client. This alert may be accompanied by MQ alerts. An extended outage may require
-              MQ channels to be restarted.
+              MQ channels to be restarted. The services are on TCP ports 17485-8 on IP 208.77.94.31
   - name: JVM Heap Usgage
     detail: The JVM Heap usage has exceeded the 95 percent threshold
     fluxfile: flux/jvm_heap_use.flux
@@ -379,7 +401,8 @@ checks:
     action: | 
               Log in to the MQ server and check the channel status. Verify that the remote MQ server is reachable on the MQ port.
               Attempt to reset any unhealthy channel(s). User netstat (or ss) to check for any connections in an unusual state.
-              If there is an underlying network problem escalate to Azure Network Support and the client.
+              If there is an underlying network problem escalate to Azure Network Support and the client. The remote MQ server
+              is on TCP port 17516 on IP 208.77.94.31
   - name: No Job Control Record
     detail: checks for the presence of job control error messages
     fluxfile: flux/no_job_record.flux

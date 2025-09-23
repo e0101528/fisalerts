@@ -17,4 +17,5 @@
     action: | 
               This indicates that Feedhub is not reachable from one or more servers. This may be a temporary disruption of traffic. 
               Log into the affected VM and manually test connectivity. An extended failure to connect or repeated alerts should be
-              escalated to Azure Network Support and/or the client. 
+              escalated to Azure Network Support and/or the client. Feedhub uses port 22 on IP adresses: 168.108.161.83 (MCC) and
+              168.108.225.214 (SCC)

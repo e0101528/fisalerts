@@ -18,4 +18,4 @@
               This alert indicates that several attempts to connect by TCP to the endpoint in the details failed. This may be a
               temporary problem but connectivity should be verified manually. Extended outages should be escalated to Azure
               Network Support and/or the client. This alert may be accompanied by MQ alerts. An extended outage may require
-              MQ channels to be restarted.
+              MQ channels to be restarted. The services are on TCP ports 17485-8 on IP 208.77.94.31
