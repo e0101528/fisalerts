@@ -1,5 +1,5 @@
   - name: Fundserv Net Down
-    detail: The MQ endpoint at Fundserv on 142.148.10.120 port 2222 is unreachable
+    detail: The SCP endpoint at Fundserv on 142.148.10.120 port 2222 is unreachable
     fluxfile: flux/fundserv_net_down.flux
     severity: 1
     threshold: 1
