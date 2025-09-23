@@ -457,7 +457,7 @@ checks:
               This alert indicates that several attempts to connect by TCP to the endpoint in the details failed. This may be a
               temporary problem but connectivity should be verified manually. Extended outages should be escalated to Azure
               Network Support and/or the client. Reuters is reached through the CIBC network and may indicate a more serious loss 
-              of connectivity. 
+              of connectivity. Reuters services are on port 14002 at either 168.108.155.148 or 168.108.155.149. 
   - name: Idle Min
     detail: Checks for minimum CPU Idle below a 5% threshold for 80% of metrics
     fluxfile: flux/usage_idle.flux
