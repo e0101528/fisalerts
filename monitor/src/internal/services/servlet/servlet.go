@@ -46,9 +46,7 @@ func Server(ctx context.Context, c *config.ApplicationConfig) error {
 		}
 	}()
 
-	select {
-	case <-ctx.Done():
-	}
+	<-ctx.Done()
 
 	return server.Shutdown(ctx)
 }
@@ -77,7 +75,7 @@ func handleAlert(cfgp *config.ApplicationConfig, t *template.Template) func(w ht
 		}
 		var c Info
 		var chk *config.Check
-		for i, _ := range cfg.Checks {
+		for i := range cfg.Checks {
 			if cfg.Checks[i].ID == checkid {
 				chk = &cfg.Checks[i]
 			}

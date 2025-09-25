@@ -68,29 +68,36 @@
 			border-bottom-width: 0;
 		}
 	</style>
-<h1>{{.Name}}</h1>
+<h1>{{ .Check.Name }}</h1>
 <table>
 <tbody>
-<tr><td>Name</td><td>{{ .Name }}</td></tr>
-<tr><td>Detail</td><td>{{ .Detail }}</td></tr>
-<tr><td>Calendar</td><td>{{ .Calendar }}</td></tr>
-<tr><td>FluxFile</td><td>{{ .FluxFile }}</td></tr>
-<tr><td>Flux</td><td><pre>{{ .Flux }}</pre></td></tr>
-<tr><td>Severity</td><td>{{ .Severity }}</td></tr>
-<tr><td>Threshold</td><td>{{ .Threshold }}</td></tr>
-<tr><td>Comparison</td><td>{{ .Comparison }}</td></tr>
-<tr><td>Match</td><td>{{ .Match }}</td></tr>
-<tr><td>Interval</td><td>{{ .Interval }}</td></tr>
-<tr><td>Target</td><td>{{ .Target }}</td></tr>
-<tr><td>ID</td><td>{{ .ID }}</td></tr>
+<tr><td>Name</td><td>{{ .Check.Name }}</td></tr>
+<tr><td>Detail</td><td>{{ .Check.Detail }}</td></tr>
+<tr><td>Calendar</td><td>{{ .Check.Calendar }}</td></tr>
+<tr><td>FluxFile</td><td>{{ .Check.FluxFile }}</td></tr>
+<tr><td>Flux</td><td><pre>{{ .Check.Flux }}</pre></td></tr>
+<tr><td>Severity</td><td>{{ .Check.Severity }}</td></tr>
+<tr><td>Threshold</td><td>{{ .Check.Threshold }}</td></tr>
+<tr><td>Comparison</td><td>{{ .Check.Comparison }}</td></tr>
+<tr><td>Match</td><td>{{ .Check.Match }}</td></tr>
+<tr><td>Interval</td><td>{{ .Check.Interval }}</td></tr>
+<tr><td>Target</td><td>{{ .Check.Target }}</td></tr>
+<tr><td>ID</td><td>{{ .Check.ID }}</td></tr>
 <tr><td>Tags</td><td>
 <table>
 
-    {{range $k,$v := .Tags}}
+    {{range $k,$v := .Check.Tags}}
         <tr><td>{{ $v }}</td></tr>{{ end }}
 </table>
 </td></tr>
-<tr><td>Recommended Actions</td><td><pre>{{ .Action }}</pre></td></tr>
+<tr><td>Query Results</td><td>
+<table>
+
+    {{range $k,$v := .Alert}}
+        <tr><td>{{ $k }}: </td><td>{{ $v }}</td></tr>{{ end }}
+</table>
+</td></tr>
+<tr><td>Recommended Actions</td><td><pre>{{ .Check.Action }}</pre></td></tr>
 
 </tbody>
 </table>

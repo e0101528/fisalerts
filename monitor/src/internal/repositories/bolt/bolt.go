@@ -3,7 +3,6 @@ package repositories
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"monitor/internal/utils"
 	"time"
@@ -102,7 +101,7 @@ func (tsdb *TimeSeries) Fetch(ctx context.Context, check []byte, key string) (da
 	defer tx.Rollback()
 	bucket := tx.Bucket(check)
 	if bucket == nil {
-		err = errors.New(fmt.Sprintf("bucket %v not found", check))
+		err = fmt.Errorf("bucket %v not found", check)
 		return
 	}
 	v := bucket.Get([]byte(key))
