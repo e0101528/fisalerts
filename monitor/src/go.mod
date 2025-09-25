@@ -5,6 +5,7 @@ go 1.23.3
 require (
 	github.com/boltdb/bolt v1.3.1
 	github.com/davecgh/go-spew v1.1.1
+	github.com/encodingx/binary v1.2.2
 	github.com/go-co-op/gocron/v2 v2.16.2
 	github.com/google/uuid v1.6.0
 	github.com/influxdata/influxdb-client-go/v2 v2.14.0

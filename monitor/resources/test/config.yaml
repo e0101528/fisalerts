@@ -80,7 +80,7 @@ checks:
     calendar: Lazy
     fluxfile: uptime_format.flux
     severity: 1
-    match: 34 day
+    match: 1 day
     comparison: substr
     tags: 
       - host
@@ -99,7 +99,7 @@ checks:
               |> filter (fn: (r) => r["_field"] == "uptime_format" ) 
               |> last()
     severity: 1
-    match: 33 day
+    match: 1 day
     comparison: substr
     tags: 
       - host

@@ -14,6 +14,11 @@ import (
 	"path/filepath"
 )
 
+type Info struct {
+	Check config.Check
+	Alert map[string]any
+}
+
 func Server(ctx context.Context, c *config.ApplicationConfig) error {
 	w := c.Webserver
 	tmpl := filepath.Join(c.ConfigDir, w.TemplateFile)
@@ -51,7 +56,7 @@ func Server(ctx context.Context, c *config.ApplicationConfig) error {
 func handleAlert(cfgp *config.ApplicationConfig, t *template.Template) func(w http.ResponseWriter, r *http.Request) {
 	tmpl := *t
 	cfg := *cfgp
-	utils.Warn("Pointers %v %v\n", t, cfgp)
+	utils.Debug("Pointers %v %v\n", t, cfgp)
 	return func(w http.ResponseWriter, r *http.Request) {
 		utils.Debug("Handler params %v %v\n", w, r)
 
@@ -66,16 +71,27 @@ func handleAlert(cfgp *config.ApplicationConfig, t *template.Template) func(w ht
 			http.Error(w, "Missing checkid parameter", http.StatusBadRequest)
 			return
 		}
-		var c *config.Check
+		alert := r.URL.Query().Get("alert")
+		if alert != "" {
+
+		}
+		var c Info
+		var chk *config.Check
 		for i, _ := range cfg.Checks {
 			if cfg.Checks[i].ID == checkid {
-				c = &cfg.Checks[i]
+				chk = &cfg.Checks[i]
 			}
 		}
-		if c == nil {
+		if chk == nil {
 			utils.Error(fmt.Sprintf("Missing or invalid check in request to servlet rq: %s", r.URL.String()))
 			http.Error(w, "Missing check or invalid checkid parameter", http.StatusBadRequest)
 			return
+		}
+		c.Check = *chk
+		utils.Debug("Fetching form storage %v %v", c.Check.Name, alert)
+		a, e := cfgp.Storage.Fetch(r.Context(), []byte(c.Check.Name), alert)
+		if e == nil {
+			c.Alert = a
 		}
 		var buffer bytes.Buffer
 
@@ -83,7 +99,7 @@ func handleAlert(cfgp *config.ApplicationConfig, t *template.Template) func(w ht
 		utils.Debug(fmt.Sprintf("Template: %s\n", tmpl.Name()))
 		err := tmpl.ExecuteTemplate(b, cfg.Webserver.TemplateFile, c)
 		if err != nil {
-			http.Error(w, "Mapping failed", http.StatusBadRequest)
+			http.Error(w, fmt.Sprintf("Mapping failed %v", err), http.StatusBadRequest)
 		}
 		b.Flush()
 		w.Write(buffer.Bytes())

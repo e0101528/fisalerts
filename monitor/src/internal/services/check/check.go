@@ -38,7 +38,8 @@ func Run(ctx context.Context, c config.Check) {
 	utils.Info("Got %d results\n", len(res))
 	utils.Dump("Results", res)
 	for k, v := range res {
-		value := v.(map[string]interface{})["_value"]
+		resultmap := v.(map[string]any)
+		value := resultmap["_value"]
 		switch value.(type) {
 		case string:
 			result = compare(value, c.Comparison, c.Match)
@@ -54,9 +55,9 @@ func Run(ctx context.Context, c config.Check) {
 			default:
 				utils.Debug("Check %s is active:\n  numeric => %v %v %v \n", c.Name, value, c.Comparison, c.Threshold)
 			}
-			if db.SetActive(ctx, []byte(c.Name), []byte(k), int64(c.Interval)) {
+			if db.SetActive(ctx, []byte(c.Name), []byte(k), int64(c.Interval), resultmap) {
 				if cal.IsActive(c.Calendar) {
-					content := RtoC(cfg, v.(map[string]interface{}), c)
+					content := RtoC(cfg, k, v.(map[string]interface{}), c)
 					utils.Debug("!!! AWWOOGA %s \n", k)
 					utils.Dump("Value", value)
 					if ok {
@@ -76,7 +77,7 @@ func Run(ctx context.Context, c config.Check) {
 	}
 	//utils.Dumper(res)
 }
-func RtoC(cfg *config.ApplicationConfig, r map[string]interface{}, c config.Check) (content notifier.Content) {
+func RtoC(cfg *config.ApplicationConfig, k string, r map[string]interface{}, c config.Check) (content notifier.Content) {
 
 	content.Labels = make(map[string]string)
 	content.Fields = make(map[string]string)
@@ -85,6 +86,7 @@ func RtoC(cfg *config.ApplicationConfig, r map[string]interface{}, c config.Chec
 			content.Labels[n] = fmt.Sprintf("%v", v)
 		}
 	}
+	content.Fields["name"] = k
 
 	content.Fields["self"], _ = os.Hostname()
 	content.Fields["status"] = "firing"

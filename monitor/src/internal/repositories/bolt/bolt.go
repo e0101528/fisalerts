@@ -2,7 +2,9 @@ package repositories
 
 import (
 	"context"
-	"encoding/binary"
+	"encoding/json"
+	"errors"
+	"fmt"
 	"monitor/internal/utils"
 	"time"
 
@@ -35,22 +37,40 @@ func (tsdb *TimeSeries) Shutdown() {
 	tsdb.TSDB.Close()
 }
 
-func (tsdb *TimeSeries) SetActive(ctx context.Context, check []byte, key []byte, interval int64) bool {
+func (tsdb *TimeSeries) SetActive(ctx context.Context, check []byte, key []byte, interval int64, rm map[string]any) bool {
+	var lm map[string]any
 	isActivated := false
 	pIsActivated := &isActivated
 	now := time.Now().Unix()
-	n := make([]byte, 8)
-	binary.BigEndian.PutUint64(n, uint64(now))
-	err := tsdb.TSDB.Update(func(tx *bolt.Tx) error {
+	//buf := new(bytes.Buffer)
+	rm["timestamp"] = int64(now)
+	//err := binary.Write(buf, binary.BigEndian, rm)
+	bts, err := json.Marshal(rm)
+	if err != nil {
+		utils.Error("binary.Write failed: %v", err)
+	}
+	err = tsdb.TSDB.Update(func(tx *bolt.Tx) error {
 		bucket, e := tx.CreateBucketIfNotExists(check)
 		if e != nil {
 			*pIsActivated = false
 			return e
 		}
+
 		v := bucket.Get([]byte(key))
 		var lastactive int64
+		var ok bool
 		if v != nil {
-			lastactive = int64(binary.BigEndian.Uint64(v))
+			e := json.Unmarshal(v, &lm)
+			if e != nil {
+				lastactive = 0
+				utils.Error("binary unmarshal failed: %v", err)
+
+			} else {
+				lastactive, ok = lm["timestamp"].(int64)
+				if !ok {
+					lastactive = 0
+				}
+			}
 		} else {
 			lastactive = 0
 		}
@@ -62,11 +82,39 @@ func (tsdb *TimeSeries) SetActive(ctx context.Context, check []byte, key []byte,
 			utils.Info("IsActivated=false\n")
 
 		}
-		bucket.Put([]byte(key), n)
+
+		bucket.Put([]byte(key), bts)
 		return nil
 	})
 	if err != nil {
 		utils.Error("bolt Setactive error: %v", err)
 	}
 	return isActivated
+}
+
+func (tsdb *TimeSeries) Fetch(ctx context.Context, check []byte, key string) (data map[string]any, err error) {
+	data = make(map[string]any)
+
+	tx, e := tsdb.TSDB.Begin(false)
+	if e != nil {
+		return data, e
+	}
+	defer tx.Rollback()
+	bucket := tx.Bucket(check)
+	if bucket == nil {
+		err = errors.New(fmt.Sprintf("bucket %v not found", check))
+		return
+	}
+	v := bucket.Get([]byte(key))
+	if v != nil {
+		err = json.Unmarshal(v, &data)
+		if err != nil {
+			utils.Error("binary unmarshal failed: %v", err)
+			return
+		}
+
+	}
+
+	return data, nil
+
 }
