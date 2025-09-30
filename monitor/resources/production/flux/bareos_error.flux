@@ -1,0 +1,7 @@
+from(bucket: "telegraf")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r["_measurement"] == "Bareos")
+  |> filter(fn: (r) => r["_field"] == "status")
+  |> filter(fn: (r) => r["_value"] == "ERROR")
+  |> count()
+

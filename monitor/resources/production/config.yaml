@@ -99,6 +99,24 @@ targets:
     method: logger
     templatefile: gx.tmpl
 checks:
+  - name: Bareos Backup Failure
+    detail: A backup has exited with an Error status 
+    fluxfile: flux/bareos_error.flux
+    severity: 1
+    threshold: 0.0
+    comparison: gt
+    tags: 
+      - host
+      - client
+      - level
+      - _field
+      - _measurement
+    interval: 3600
+    target: xapi
+    action: | 
+              There is a serious problem with the backups running on cibccaprodadm1. 
+              Log in to the server and the bareos console. Check the status of the failed, running and waiting backup. 
+              Escalate if there are underlying error (e.g. media/storage errors). 
   - name: Broadridge Net Down
     detail: Broadridge is unreachable
     fluxfile: flux/bfs_net_down.flux
