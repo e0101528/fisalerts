@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"monitor/internal/config"
 	"monitor/internal/services/check"
+	"monitor/internal/utils"
 	"time"
 
 	"github.com/go-co-op/gocron/v2"
@@ -18,21 +19,47 @@ func Launch(ctx context.Context, c config.Check) error {
 	}
 
 	// add a job to the scheduler
-	j, err := s.NewJob(
-		gocron.DurationJob(
-			time.Duration(c.Interval)*time.Second,
-		),
-		gocron.NewTask(
-			func(ctx context.Context, c config.Check) {
-				check.Run(ctx, c)
-			},
-			ctx,
-			c,
-		),
-	)
-	if err != nil {
-		return err
+	var j gocron.Job
+	if c.Interval > 0 {
+		utils.Debug("Starting job on interval schedule")
+		j, err = s.NewJob(
+			gocron.DurationJob(
+				time.Duration(c.Interval)*time.Second,
+			),
+			gocron.NewTask(
+				func(ctx context.Context, c config.Check) {
+					check.Run(ctx, c)
+				},
+				ctx,
+				c,
+			),
+		)
+		if err != nil {
+			return err
+		}
+	} else {
+		if c.Cron == "" {
+			return fmt.Errorf("invalid schedule")
+		}
+		utils.Debug("Starting job on cron schedule")
+
+		j, err = s.NewJob(
+			gocron.CronJob(
+				c.Cron, false,
+			),
+			gocron.NewTask(
+				func(ctx context.Context, c config.Check) {
+					check.Run(ctx, c)
+				},
+				ctx,
+				c,
+			),
+		)
+		if err != nil {
+			return err
+		}
 	}
+
 	// each job has a unique id
 	fmt.Printf("Startup: %v\n", j.ID())
 
@@ -40,9 +67,8 @@ func Launch(ctx context.Context, c config.Check) error {
 	s.Start()
 
 	// block until you are ready to shut down
-	select {
-	case <-ctx.Done():
-	}
+
+	<-ctx.Done()
 
 	// when you're done, shut it down
 	err = s.Shutdown()

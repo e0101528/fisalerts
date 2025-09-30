@@ -57,12 +57,13 @@ checks:
       - host
       - _field
       - _measurement
-    interval: 15
+    interval: 120
     target: logonly
     action: Check Influx or Grafana to identify extended period of diskio. Use iostat on the VM to identify the target. Use iotop to identify the culprit.
   - name: Idle Min
     detail: checks for minimum CPU Idle below a threshold
     fluxfile: usage_idle.flux
+    calendar: Lazy
     severity: 1
     threshold: 90
     comparison: le
@@ -70,23 +71,22 @@ checks:
       - host
       - _field
       - _measurement
-    interval: 20
+    interval: 60
     target: logonly
     action: | 
               Although BFS occassionally flaps, any extended outage may prevent file transfers and MQ messaging.
               Login to manually verify that network is recovered. If not open and incident for Azure Network Support
   - name: System Uptime
     detail: checks for minimum CPU Idle below a threshold
-    calendar: Lazy
     fluxfile: uptime_format.flux
     severity: 1
-    match: 1 day
+    match: 6 day
     comparison: substr
     tags: 
       - host
       - _field
       - _measurement
-    interval: 10
+    cron: "4 16 * * *"
     target: postfix
     action: Do nothing. It's all about being laxy.
   - name: System Stuff
@@ -105,7 +105,7 @@ checks:
       - host
       - _field
       - _measurement
-    interval: 10
+    interval: 60
     target: postfix
     action: Do nothing. It's all about being laxy.
 targets: 

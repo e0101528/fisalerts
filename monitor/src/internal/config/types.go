@@ -41,6 +41,7 @@ type Check struct {
 	Target     string   `yaml:"target"`
 	ID         string   `yaml:"id"` //overwritten by checksum of flux
 	Action     string   `yaml:"action"`
+	Cron       string   `yaml:"cron"`
 }
 
 type Target struct {
