@@ -4,4 +4,3 @@ from(bucket: "telegraf")
   |> filter(fn: (r) => r["_field"] == "status")
   |> filter(fn: (r) => r["_value"] == "ERROR")
   |> count()
-
