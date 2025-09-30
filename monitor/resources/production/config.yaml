@@ -117,6 +117,24 @@ checks:
               There is a serious problem with the backups running on cibccaprodadm1. 
               Log in to the server and the bareos console. Check the status of the failed, running and waiting backup. 
               Escalate if there are underlying error (e.g. media/storage errors). 
+  - name: Bareos Backup Count Low
+    detail: An unusually low number of backups have completed 
+    fluxfile: flux/bareos_job_count.flux
+    severity: 1
+    threshold: 10.0
+    comparison: lt
+    tags: 
+      - host
+      - _field
+      - _measurement
+    cron: "0 6 * * *"
+    target: xapi
+    action: | 
+              There may be a problem with the backups running on cibccaprodadm1. Fewer job than
+              expected have completed by the end of the mnormal backup window (6am).
+              Log in to the server and the bareos console. Check the status of the failed, running and waiting backup. 
+              Escalate if there are many jobs waiting on a long running job. Investigate why the
+              job is stalled by reviewing the job logs. 
   - name: Broadridge Net Down
     detail: Broadridge is unreachable
     fluxfile: flux/bfs_net_down.flux
