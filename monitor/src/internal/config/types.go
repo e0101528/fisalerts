@@ -75,6 +75,7 @@ type ApplicationConfig struct {
 	AssignmentGroup string         `yaml:"assignmentgroup"`
 	AppGroupEmail   string         `yaml:"appgroupemail"`
 	IPAddr          string         `yaml:"ipaddr"`
+	Environment     string         `yaml:"environment"`
 	InfluxDB        InfluxDBConfig `yaml:"influxdb"`
 	MaintenanceMode bool
 	ConfigDir       string

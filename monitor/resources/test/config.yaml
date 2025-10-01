@@ -3,6 +3,7 @@ self: cibccaprodadm2
 azuresub: ca049151-8cb9-421b-b536-251fa31c9a62
 azurerg: wealthware_cibc-prod-sql-rg
 ipaddr: 10.73.87.73
+environment: Testing
 assignmentgroup: Wealthware
 appgroupemail: fis.wm-azure.admins@fisglobal.com
 influxdb:

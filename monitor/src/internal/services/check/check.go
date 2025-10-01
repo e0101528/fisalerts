@@ -97,7 +97,7 @@ func RtoC(cfg *config.ApplicationConfig, k string, r map[string]interface{}, c c
 	content.Fields["uuid"] = uuid.NewString()
 	content.Fields["resourceGroup"] = cfg.AzureRG
 	content.Fields["subscription"] = cfg.AzureSub
-	content.Fields["environment"] = "Test"
+	content.Fields["environment"] = cfg.Environment
 	content.Fields["appGroupEmail"] = cfg.AppGroupEmail
 	content.Fields["assignmentGroup"] = cfg.AssignmentGroup
 	content.Fields["ipaddr"] = cfg.IPAddr
