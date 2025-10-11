@@ -57,7 +57,7 @@ func (tsdb *TimeSeries) SetActive(ctx context.Context, check []byte, key []byte,
 
 		v := bucket.Get([]byte(key))
 		var lastactive int64
-		var ok bool
+		//var ok bool
 		if v != nil {
 			e := json.Unmarshal(v, &lm)
 			if e != nil {
@@ -65,9 +65,14 @@ func (tsdb *TimeSeries) SetActive(ctx context.Context, check []byte, key []byte,
 				utils.Error("binary unmarshal failed: %v", err)
 
 			} else {
-				lastactive, ok = lm["timestamp"].(int64)
+				la, ok := lm["timestamp"]
 				if !ok {
+					utils.Warn("timestamp missing from json: %v with %T", lm, la)
 					lastactive = 0
+				} else {
+					lastactive = int64(lm["timestamp"].(float64))
+					utils.Warn("timestamp cast to: %v from %T", lastactive, la)
+
 				}
 			}
 		} else {
