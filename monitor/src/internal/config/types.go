@@ -41,6 +41,7 @@ type Check struct {
 	Target     string   `yaml:"target"`
 	ID         string   `yaml:"id"` //overwritten by checksum of flux
 	Action     string   `yaml:"action"`
+	Cron       string   `yaml:"cron"`
 }
 
 type Target struct {
@@ -74,6 +75,7 @@ type ApplicationConfig struct {
 	AssignmentGroup string         `yaml:"assignmentgroup"`
 	AppGroupEmail   string         `yaml:"appgroupemail"`
 	IPAddr          string         `yaml:"ipaddr"`
+	Environment     string         `yaml:"environment"`
 	InfluxDB        InfluxDBConfig `yaml:"influxdb"`
 	MaintenanceMode bool
 	ConfigDir       string
