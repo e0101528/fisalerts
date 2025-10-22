@@ -5,6 +5,7 @@ azurerg: wealthware_cibc-prod-sql-rg
 ipaddr: 10.73.87.73
 assignmentgroup: "TSG - Wealthware" 
 appgroupemail: fis.wm-azure.admins@fisglobal.com
+environment: Production
 influxdb:
   serverurl: http://cibccaprodadm2.na1.prod.azure:8086
   org: FIS
